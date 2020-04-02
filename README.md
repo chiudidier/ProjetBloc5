@@ -20,10 +20,10 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 ## Change Log
 
 **Bugs connus**
-- Déplacement d'une tuile en vertical ne fonctionne pas
-- Déplacement d'une tuile en horizontal pas encore codé
+- Déplacement buggué si on click trop vite sur une tuile
 
 **02-04-2020** v0.1
 - Création du Dépot Git et initialisation du readme.md
 - Affichage de la grille 3x3
 - Test si la tuile cliquée est amovible
+- Déplacement d'une tuile et échange avec la tuile vide
