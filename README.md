@@ -7,7 +7,7 @@ Le projet est constitué de 2 principaux modules relativement indépendants :
 - Un module Web (notamment JS) qui va permettre d'afficher l'état du jeu et de représenter les mouvements des tuiles
 
 ## Module Python
-Le module python (à compléter plus tard)
+Le module python permetra de récupérer les données et de calculer la meilleur solution pour ensuite donner la tuile à jouer pour arriver au plus vite à la solution.
 
 ## Module Web
 Le module web utilise les librairies :
@@ -27,3 +27,10 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Affichage de la grille 3x3
 - Test si la tuile cliquée est amovible
 - Déplacement d'une tuile et échange avec la tuile vide
+
+**02-04-2020** v0.1
+- dépot de la verison python du taquin 3x3 comprennant :
+  - affichage du taquin 3x3
+  - gestion des déplacements et de la victoire
+  - gestion des états
+  - calcul et affichage de la profondeur optimale pour trouver la solution
