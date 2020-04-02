@@ -13,19 +13,34 @@ $(document).ready(function(){
     };
     */
     
+    function logposition(element){
+        console.log(element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+    };
+    
     function bouge(element, direction){
         if(direction=="G"){
-            gsap.to(element, {duration: 1, x: -200});
-            
+            gsap.to(element, {duration: 1, x: "-=200", onComplete:function(){
+                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+                }
+            });      
         }
         if(direction=="D"){
-            gsap.to(element, {duration: 1, x: 200});
+            gsap.to(element, {duration: 1, x: "+=200", onComplete:function(){
+                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+                }
+            });      
         }
         if(direction=="H"){
-            gsap.to(element, {duration: 1, y: -200});
+            gsap.to(element, {duration: 1, y: "-=200", onComplete:function(){
+                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+                }
+            });      
         }
         if(direction=="B"){
-            gsap.to(element, {duration: 1, y: 200});
+            gsap.to(element, {duration: 1, y: "+=200", onComplete:function(){
+                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+                }
+            });      
         }
         
     };
@@ -34,20 +49,21 @@ $(document).ready(function(){
     $('div.piece').click(function(){
         //Récupère l'id de la pièce sur laquelle on clique
         console.log("On vient de clicker sur "+ $(this).attr('id'))
-               
+        logposition($(this));
+        logposition($('#piece_9'));       
         //Récupère les coordonnées du coin haut gauche de la pièce
         var pos = $(this).position();
         
         //pos_top=ajuste_top($(this));
         var pos_top=pos.top;
         var pos_left=pos.left;
-        console.log("case cliquée à top "+ pos_top + " case cliquée à left "+ pos_left);
+        //console.log("case cliquée à top "+ pos_top + " case cliquée à left "+ pos_left);
         
         //Récupère les coordonnées du coin haut gauche de la tuile vide        
         //var tuilevidetop = ajuste_top($("#piece_9"));
         var tuilevidetop = $("#piece_9").position().top;
         var tuilevideleft = $("#piece_9").position().left;
-        console.log("case vide top "+ tuilevidetop + " case vide left "+ tuilevideleft);
+        //console.log("case vide top "+ tuilevidetop + " case vide left "+ tuilevideleft);
         
         //Calcul de distance par rapport à la tuile vide
         var x=(tuilevideleft-pos_left);
@@ -69,25 +85,28 @@ $(document).ready(function(){
             
             //On cherche dans quel sens bouger
             if (pos_left == tuilevideleft && pos_top < tuilevidetop){
-                console.log("old position piece" + pos_top + " "+ pos_left + " ");
-                gsap.to($(this), {duration: 1, y: 200});
+                //console.log($(this).attr('id') + " doit descendre et tuilevide doit monter");
+                bouge($(this),"B");        
+                bouge($('#piece_9'), "H");
                 
-                
-                //bouge($(this),"B");
-                console.log("new position  piece" + $(this).position().top + " "+ $(this).position().left + " ");
-                
-                bouge("#piece_9", "H");
-                console.log("new vide" + $("#piece_9").position().top + " "+ $("#piece_9").position().left + " ");
-                /*
-                tuilevidetop = tuilevidetop -200;
-                */
-                //console.log("après mouvement tuile vide top " + tuilevidetop);
             }
-            else if ($(this).position().left == tuilevideleft && $(this).position().top > tuilevidetop){
+            else if (pos_top > tuilevidetop){
+                //console.log($(this).attr('id') + " doit monter et tuilevide doit descendre");
                 bouge($(this),"H");
-                bouge("#piece_9", "B");
-                tuilevidetop = tuilevidetop +200;
-                console.log($(this).attr('id')+" monte");
+                bouge($('#piece_9'), "B");
+
+            }
+            if (pos_top == tuilevidetop && pos_left < tuilevideleft){
+                //console.log($(this).attr('id') + " doit aller à droite et tuilevide doit aller à gauche");
+                bouge($(this),"D");        
+                bouge($('#piece_9'), "G");
+                
+            }
+            else if (pos_left > tuilevideleft){
+                //console.log($(this).attr('id') + " doit aller à gauche et tuilevide doit aller à droite");
+                bouge($(this),"G");
+                bouge($('#piece_9'), "D");
+
             }
         }
         else {
