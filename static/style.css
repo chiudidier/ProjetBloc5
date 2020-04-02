@@ -1,0 +1,82 @@
+/*
+style.css
+---------
+ 
+Par Equipe DIU Projet bloc 5 - Didier CHIU - Nicolas VAZ-PINTO - 2020
+*/
+
+/*Tous les éléments de classe wrapper*/ 
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  grid-template-rows: repeat(3, 200px);
+}
+
+
+/*Sélectionne l'élément d'id=wrapper*/ 
+/*
+#wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  width: 50%;
+  background: #aaa;
+}
+
+#*/
+
+/* Titre niveau 1*/
+ 
+h1
+{
+	text-align: center;
+    font-weight: normal;
+    text-decoration: underline;
+    border: 3px blue outset;
+	display: flex;
+	
+}
+
+#h1, panel-title{
+text-align:center;
+
+}
+ /* Titre niveau 2*/
+h2
+{
+	color:#6c5ce7; /*Nom de la couleur : exodus ;-)*/
+}
+
+ /* Titre niveau 3*/
+h3
+{
+	color:#1abc9c;
+}
+
+body
+{
+    background-image: url("fond2.jpg");
+	background-size: cover;	 /*Un background plein écran flexible avec CSS*/
+    background-attachment: fixed; /* Le fond restera fixe */
+	min-height: 100%;
+	min-width: 1024px;
+	position: relative;
+	/*top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;*/
+	text-align: justify;
+	margin-left: 50px;
+	margin-right:30px;
+	
+	/* Pour chaque élément html on peut donc définir l'espacement qui 
+	le séparera des autres éléments (margin) et
+	les espacements intérieurs dont il peut bénéficier (padding).
+	On peut détailler les tailles des marges à l'aide des suffixes
+	-top (haut), -right (droite), -bottom (bas), -left (gauche), ou synthétiser les quatre d'un seul coup 
+	(la première valeur étant celle du haut, puis on tourne dans le sens des aiguilles d'une montre).*/
+	
+}
