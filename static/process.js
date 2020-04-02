@@ -72,7 +72,7 @@ $(document).ready(function(){
         console.log("dist", dist);
         
         //Test sur la distance pour savoir si c'est clickable
-        if (dist>Math.sqrt(80000)) {
+        if (dist>Math.sqrt(80000)-1) {
             var clickable = false;
         }
         else {
