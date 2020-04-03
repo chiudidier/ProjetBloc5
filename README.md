@@ -34,3 +34,4 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
   - gestion des déplacements et de la victoire
   - gestion des états
   - calcul et affichage de la profondeur optimale pour trouver la solution
+  - ajout des commentaires pour un meilleur suivi du projet
