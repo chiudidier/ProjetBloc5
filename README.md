@@ -21,6 +21,11 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile
+- Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
+
+**03-04-2020** v0.21
+- Calcul et affichage de la solution optimale pour résoudre le taquin python
+- affichage du prochain taquin à obtenir
 
 **03-04-2020** v0.2
 - Communication avec le module python établie via la route /shuffle
