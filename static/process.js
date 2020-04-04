@@ -1,5 +1,22 @@
 $(document).ready(function(){
     
+    var state="012345678";
+    console.log("départ " + state);
+    //Echange la position du 1 et du 9 dans la chaîne qui représente la grille
+    //console.log(state.replace(/[19]/g, function($1) { return $1 === '1' ? '9' : '1' }));
+    
+    //Fonction qui met à jour l'état de la grille représentée par la chaîne des numéro
+    function update(state, num){
+
+        var regex = new RegExp("[" + num + "0]", "g");
+        // Cette ligne construit l'expression régulière /[num9]/g pour num variant de 1 à 8
+        return state.replace(regex, function($1) { return $1 === num ? '0' : num });
+    };
+    // Pour tester la fonction update
+    /*
+    state = update(state, '3');
+    console.log("update "+ state);
+    */
     //Fonction qui détermine les coordonnées du coin haut gauche d'une tuile  
     function logposition(element){
         console.log(element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
@@ -46,7 +63,7 @@ $(document).ready(function(){
         var TL = gsap.timeline();
         TL
             .to(element, duree, getdir(direction), "+=0.5")
-            .to($("#piece_9"), duree, oppositedir(direction), "-=0.5")  
+            .to($("#piece_0"), duree, oppositedir(direction), "-=0.5")  
     
         //console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
         
@@ -60,8 +77,11 @@ $(document).ready(function(){
     $('div.piece').click(function(){
         //Récupère l'id de la pièce sur laquelle on clique
         console.log("On vient de clicker sur "+ $(this).attr('id'))
+        //Récupération du numéro de la piece
+        var numero = $(this).attr('id').charAt($(this).attr('id').length-1);
+        
         logposition($(this));
-        logposition($('#piece_9'));       
+        logposition($('#piece_0'));       
         //Récupère les coordonnées du coin haut gauche de la pièce
         var pos = $(this).position();
         
@@ -71,8 +91,8 @@ $(document).ready(function(){
         
         //Récupère les coordonnées du coin haut gauche de la tuile vide        
         //var tuilevidetop = ajuste_top($("#piece_9"));
-        var tuilevidetop = $("#piece_9").position().top;
-        var tuilevideleft = $("#piece_9").position().left;
+        var tuilevidetop = $("#piece_0").position().top;
+        var tuilevideleft = $("#piece_0").position().left;
         //console.log("case vide top "+ tuilevidetop + " case vide left "+ tuilevideleft);
         
         //Calcul de distance par rapport à la tuile vide
@@ -106,6 +126,9 @@ $(document).ready(function(){
             else if (pos_left > tuilevideleft){
                 echange($(this),"G", 0.5);
             }
+            //Mise à jour de la chaîne représentant l'état
+            state = update(state, numero);
+            console.log("update "+ state);
         }
         else {
             alert("Vous ne pouvez pas déplacer cette tuile");
@@ -132,7 +155,7 @@ $(document).ready(function(){
                 for (i=0; i<data.length/2; i++){
                     shuffleTL
                         .to($("#piece_"+data[2*i]), 0.5, getdir(data[2*i+1]), "+=0.5")
-                        .to($("#piece_9"), 0.5, oppositedir(data[2*i+1]), "-=0.5")
+                        .to($("#piece_0"), 0.5, oppositedir(data[2*i+1]), "-=0.5")
                 }
             })
     }
@@ -143,7 +166,7 @@ $(document).ready(function(){
         button_id = $(this).attr('id');
         
         if (button_id == "btn_melange"){
-                request = {"argument1":"melange"};
+                request = {"argument1":"melange", "argument2":state};
                 send_info(request);         
         }
     });
