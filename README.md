@@ -11,7 +11,7 @@ Le module python permetra de récupérer les données et de calculer la meilleur
 
 ## Module Web
 Le module web utilise les librairies :
--JQuery pour la partie JavaScript (écoute des clicks, validité d'un mouvement, ...)
+-JQuery pour la partie JavaScript (écoute des clicks, validité d'un mouvement, ...)<br>
 -GSAP pour la partie d'animation des objets
 
 ## Travail Collaboratif
@@ -22,11 +22,10 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile
 
-**02-04-2020** v0.1
-- Création du Dépot Git et initialisation du readme.md
-- Affichage de la grille 3x3
-- Test si la tuile cliquée est amovible
-- Déplacement d'une tuile et échange avec la tuile vide
+**03-04-2020** v0.2
+- Communication avec le module python établie via la route /shuffle
+- Le module python renvoie une chaîne de caractères (ex : 6B5D7H)
+- La chaîne est traitée pour créer une animation des tuiles
 
 **02-04-2020** v0.1
 - dépot de la verison python du taquin 3x3 comprennant :
@@ -35,3 +34,9 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
   - gestion des états
   - calcul et affichage de la profondeur optimale pour trouver la solution
   - ajout des commentaires pour un meilleur suivi du projet
+
+**02-04-2020** v0.1
+- Création du Dépot Git et initialisation du readme.md
+- Affichage de la grille 3x3
+- Test si la tuile cliquée est amovible
+- Déplacement d'une tuile et échange avec la tuile vide
