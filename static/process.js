@@ -1,51 +1,62 @@
 $(document).ready(function(){
-    /*
-    //Ajuste la valeur position().top d'un élément
-    function ajuste_top(element){
-    var top=0;
-        if (element.position().top>400) {
-            top=400;
-        }
-        else if (element.position().top>200) {
-            top=200;
-        }  
-    return top;
-    };
-    */
     
+    //Fonction qui détermine les coordonnées du coin haut gauche d'une tuile  
     function logposition(element){
         console.log(element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
     };
     
-    function bouge(element, direction){
-        if(direction=="G"){
-            gsap.to(element, {duration: 1, x: "-=200", onComplete:function(){
-                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
-                }
-            });      
+    //Fonction qui renvoie les paramètres de direction pour l'animation d'une tuile
+    function getdir(chaine){
+        var param=""
+        if(chaine=="G"){
+            param ={x:"-=200"}
         }
-        if(direction=="D"){
-            gsap.to(element, {duration: 1, x: "+=200", onComplete:function(){
-                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
-                }
-            });      
+        if(chaine=="D"){
+            param ={x:"+=200"}
         }
-        if(direction=="H"){
-            gsap.to(element, {duration: 1, y: "-=200", onComplete:function(){
-                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
-                }
-            });      
+        if(chaine=="H"){
+            param ={y:"-=200"}
         }
-        if(direction=="B"){
-            gsap.to(element, {duration: 1, y: "+=200", onComplete:function(){
-                console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
-                }
-            });      
+        if(chaine=="B"){
+            param ={y:"+=200"}
         }
-        
+        return param
     };
     
-    //Détermine si l'élément est clickable
+    //Fonction qui renvoie les paramètres de direction pour l'animation de la tuile vide
+    function oppositedir(chaine){
+        var param=""
+        if(chaine=="G"){
+            param ={x:"+=200"}
+        }
+        if(chaine=="D"){
+            param ={x:"-=200"}
+        }
+        if(chaine=="H"){
+            param ={y:"+=200"}
+        }
+        if(chaine=="B"){
+            param ={y:"-=200"}
+        }
+        return param
+    };
+    
+    //Fonction qui échange un élément avec la tuile vide
+    function echange(element, direction, duree){
+        var TL = gsap.timeline();
+        TL
+            .to(element, duree, getdir(direction), "+=0.5")
+            .to($("#piece_9"), duree, oppositedir(direction), "-=0.5")  
+    
+        //console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+        
+        //Equivalent dans l'ancienne version à 
+        // gsap.to(element, {duration: 1, x: "-=200", onComplete:function(){
+        //            console.log("after move " + element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
+        //            }   
+    };
+    
+    //On écoute les click sur les tuiles (classe piece) et on détermine si l'élément est clickable
     $('div.piece').click(function(){
         //Récupère l'id de la pièce sur laquelle on clique
         console.log("On vient de clicker sur "+ $(this).attr('id'))
@@ -54,7 +65,6 @@ $(document).ready(function(){
         //Récupère les coordonnées du coin haut gauche de la pièce
         var pos = $(this).position();
         
-        //pos_top=ajuste_top($(this));
         var pos_top=pos.top;
         var pos_left=pos.left;
         //console.log("case cliquée à top "+ pos_top + " case cliquée à left "+ pos_left);
@@ -69,7 +79,7 @@ $(document).ready(function(){
         var x=(tuilevideleft-pos_left);
         var y=(tuilevidetop-pos_top);
         var dist=Math.sqrt(x*x+y*y);
-        console.log("dist", dist);
+        //console.log("dist", dist);
         
         //Test sur la distance pour savoir si c'est clickable
         if (dist>Math.sqrt(80000)-1) {
@@ -83,35 +93,59 @@ $(document).ready(function(){
         if (clickable && dist!==0){
             console.log("mouvement autorisé");
             
-            //On cherche dans quel sens bouger
+            //On cherche dans quel sens bouger avant de faire l'échange
             if (pos_left == tuilevideleft && pos_top < tuilevidetop){
-                //console.log($(this).attr('id') + " doit descendre et tuilevide doit monter");
-                bouge($(this),"B");        
-                bouge($('#piece_9'), "H");
-                
+                echange($(this),"B", 0.5);        
             }
             else if (pos_top > tuilevidetop){
-                //console.log($(this).attr('id') + " doit monter et tuilevide doit descendre");
-                bouge($(this),"H");
-                bouge($('#piece_9'), "B");
-
+                echange($(this),"H", 0.5);
             }
             if (pos_top == tuilevidetop && pos_left < tuilevideleft){
-                //console.log($(this).attr('id') + " doit aller à droite et tuilevide doit aller à gauche");
-                bouge($(this),"D");        
-                bouge($('#piece_9'), "G");
-                
+                echange($(this),"D", 0.5);        
             }
             else if (pos_left > tuilevideleft){
-                //console.log($(this).attr('id') + " doit aller à gauche et tuilevide doit aller à droite");
-                bouge($(this),"G");
-                bouge($('#piece_9'), "D");
-
+                echange($(this),"G", 0.5);
             }
         }
         else {
             alert("Vous ne pouvez pas déplacer cette tuile");
         }
         });
+    
+    //Fonction d'envoi de données au module python
+    function send_info(to_send){
+        $.ajax({
+            type : 'GET',
+            url : '/shuffle',
+            data : to_send,
+            success : function(){console.log("Demande de mélange effectuée");},
+            error : function(){alert("BSoD : Erreur fatale pendant la demande de mélange");}
+            })
+            // On exécute cette fonction au retour
+            // Pour l'instant, on montre un mélange des tuiles via une animation
+            .done(function(data){
+                // console.log("données reçues " + data + " taille "+ data.length);
+                
+                //Création d'une timeline pour l'animation
+                var shuffleTL = gsap.timeline();
+                shuffleTL
+                for (i=0; i<data.length/2; i++){
+                    shuffleTL
+                        .to($("#piece_"+data[2*i]), 0.5, getdir(data[2*i+1]), "+=0.5")
+                        .to($("#piece_9"), 0.5, oppositedir(data[2*i+1]), "-=0.5")
+                }
+            })
+    }
+    
+    //On écoute le click sur le bouton qui actionne le mélange
+    $("#btn_melange").click(function(event){
+        event.preventDefault();
+        button_id = $(this).attr('id');
+        
+        if (button_id == "btn_melange"){
+                request = {"argument1":"melange"};
+                send_info(request);         
+        }
+    });
 
 });
