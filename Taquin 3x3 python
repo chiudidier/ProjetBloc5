@@ -189,6 +189,30 @@ def bfs(taquinzero):
 		A=B
 		p=p+1# augmente la profondeur de 1
 
+def dfs(profmax,etattest,proftest,chemin):
+	#fonction qui test les suivants d'un etat en profondeur tout en se limitant a une profondeur donnée
+	gagnant='012345678'
+	if proftest>profmax:# verification si la profondeur maximum n'est pas atteinte
+		return(False)
+	if etattest.val==gagnant:# verification si l'etat testé est gagnant ou non
+		return(True)
+	# calcul des suivants de l'etat testé
+	suivantstxt=etattest.suivants()
+	suivantslist=txt2list(suivantstxt)
+	suivantsetats=[]
+	
+	for i in suivantslist:# mise en liste des suivants pour traitement
+		taquintmp=Taquin(i)
+		tmp=etat(taquintmp)
+		suivantsetats.append(tmp)
+		
+	for i in suivantsetats:# appel recursif de la fonction de test pour descendre en profondeur
+		if dfs(profmax,i,proftest+1,chemin)==True:
+			chemin.append(i.val)#stockage du chemin d'acces pour memoire et retour
+			return(True)
+	return(False)
+
+
 #main
 
 montxt='012345678'# position initiale = solution
@@ -197,12 +221,20 @@ montaquin=Taquin(montxt)# création du taquin
 # mélange en realisant 15 coups aléatoires à partir de la position initiale pour garantir que la position obtenu soit bien solutionnable.
 while montaquin.gagnant():
 	montaquin.melanger(15)
-
+print('taquin a resoudre:')
 print(montaquin)
 
 while montaquin.gagnant()==False:# boucle principale du jeu. Sort qaund le taquin est solutionné
 	reste=bfs(montaquin)# calcul la profondeur minimum de la solution
+	chemin=[]
+	etatzero=etat(montaquin)
+	dfs(reste,etatzero,0,chemin)
 	print(reste,' mouvements au moins pour terminer.')# affiche l'aide
+	print('solution = ', chemin)
+	nextmove=chemin.pop()
+	nexttaquin=Taquin(nextmove)
+	print('meilleur coup suivant :')
+	print(nexttaquin)
 	move=input('\n que voulez vous jouer (h,b,d,g): ')# demande le coup à jouer et applique le mouvement
 	if move=='h':
 		montaquin.haut()
@@ -215,6 +247,5 @@ while montaquin.gagnant()==False:# boucle principale du jeu. Sort qaund le taqui
 	print(montaquin)
 
 print('Bravo vous avez gagné !')
-
 
 
