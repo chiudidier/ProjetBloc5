@@ -11,8 +11,8 @@ Le module python permetra de récupérer les données et de calculer la meilleur
 
 ## Module Web
 Le module web utilise les librairies :
--JQuery pour la partie JavaScript (écoute des clicks, validité d'un mouvement, ...)<br>
--GSAP pour la partie d'animation des objets
+- JQuery pour la partie JavaScript (écoute des clicks, validité d'un mouvement, ...)
+- GSAP pour la partie d'animation des objets
 
 ## Travail Collaboratif
 Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de David CAISSON et Teddy CHENE
