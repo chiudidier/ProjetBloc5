@@ -30,13 +30,14 @@ def Chase_the_white_rabbit():
 def retourJS():
     # Récupération de ce qui a été envoyé par JS (ici une chaine de caractères)
     fromJS = request.args.get('argument1', type = str)
-    #print("\nCe que j'ai reçu de JS", fromJS)
+    state_fromJS = request.args.get('argument2', type = str)
+    #print("\nCe que j'ai reçu de JS", state_fromJS)
           
     # Préparation de la réponse à envoyer à JS
     if (fromJS != "None"):
         if (fromJS == "melange"):
             #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            pingpong = "6B5D8H7D4B1B2G3G5H"
+            pingpong = "1G4H3D6H7G8G5B2B"
         else:
             pingpong="NULL"
     else:
