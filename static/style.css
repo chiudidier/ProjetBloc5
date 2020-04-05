@@ -74,6 +74,12 @@ ul li{
   height: 13em;
 }
 
+#p4 {
+  width: 55em;
+  height: 11em;
+}
+
+
 /* Titre niveau 1*/
 h1 {
   text-align: center;
@@ -116,5 +122,4 @@ body
 	margin-left: 50px;
 	margin-right:30px;
 	
-
 }
