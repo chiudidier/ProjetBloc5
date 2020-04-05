@@ -83,7 +83,7 @@ taquindejeu = initializetaquin("012345678")
 #=========================
 
 @app.route("/")
-def Morpheus():
+def MayTheForceBeWithYou():
 
     return render_template('index.html')    
 
@@ -92,20 +92,19 @@ def Morpheus():
 # Conversation avec JS
 #======================
 
-@app.route("/Red_pill")
-def Chase_the_white_rabbit():
-    #le shuffle est géré par la route /shuffle
+@app.route('/next')
+def ANewHope():
+    #taquindejeu est initialisé au début à "012345678" par la fonction initializetaquin (voir plus haut)
+    #mélange du taquin
+    taquindejeu.melanger(25)
+    print("test next", Etat(taquindejeu).val) #contient par exemple "312645780"
+    #chaîne à envoyer pour transmettre l'état 
+    machaine = Etat(taquindejeu).val
     
-    #A modifier plus tard
+    return render_template('play.html', depart=machaine) 
     
-    #shufflelist=['1','2','4','3','9','7','6','8','5']
-    
-    # On passe la liste de question et la liste des types en paramètres à questionnaire.html
-    #return render_template('taquin.html', depart=shufflelist) #même nom de var dans jinja html
-    return "Warning, cette route n'est pas encore configurée"
-
 @app.route('/action')
-def retourJS():
+def ReturnOfTheJedi():
     
     # Récupération de l'action demandée par JS (ici une chaine de caractères)
     actionaskedbyJS = request.args.get("action", type = str)
@@ -132,7 +131,7 @@ def retourJS():
         # Si on a clické sur le boutton dans la page web
         elif (actionaskedbyJS == "shuffle"):
             #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            argument2_tosend = "1G4H3D6H7G8G5B2B"
+            argument2_tosend = "" #1G4H3D6H7G8G5B2B
         else:
             argument2_tosend="NULL"
     else:
