@@ -23,6 +23,11 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Déplacement buggué si on click trop vite sur une tuile
 - Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
 
+**05-04-2020** v0.4
+- Création d'une page play.html initialisée avec un taquin mélangé
+- MAJ de la page index.html pour la présentation du projet
+- MAJ de style.css pour faire joli
+
 **04-04-2020** v0.31
 - Début d'incorporation des actions du jeu en python dans link.py
 - Séparation avec le fichier de Nico (tout se trouve dans taquin.py)
