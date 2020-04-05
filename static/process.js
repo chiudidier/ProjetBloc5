@@ -1,22 +1,18 @@
 $(document).ready(function(){
     
-    var state="012345678";
+    //Récupère la variable depart passée par python à l'initialisation de la page
+    var state = $("#inittaquin").val()
     console.log("départ " + state);
-    //Echange la position du 1 et du 9 dans la chaîne qui représente la grille
-    //console.log(state.replace(/[19]/g, function($1) { return $1 === '1' ? '9' : '1' }));
-    
     //Fonction qui met à jour l'état de la grille représentée par la chaîne des numéro
     function update(state, num){
-
+        
+        //Echange la position du 1 et du 9 dans la chaîne qui représente la grille
+        //console.log(state.replace(/[19]/g, function($1) { return $1 === '1' ? '9' : '1' }));
         var regex = new RegExp("[" + num + "0]", "g");
         // Cette ligne construit l'expression régulière /[num9]/g pour num variant de 1 à 8
         return state.replace(regex, function($1) { return $1 === num ? '0' : num });
     };
-    // Pour tester la fonction update
-    /*
-    state = update(state, '3');
-    console.log("update "+ state);
-    */
+
     //Fonction qui détermine les coordonnées du coin haut gauche d'une tuile  
     function logposition(element){
         console.log(element.attr('id') + " top " + element.position().top + " left "+ element.position().left);
@@ -80,8 +76,8 @@ $(document).ready(function(){
         //Récupération du numéro de la piece
         var numero = $(this).attr('id').charAt($(this).attr('id').length-1);
         
-        logposition($(this));
-        logposition($('#piece_0'));       
+        //logposition($(this));
+        //logposition($('#piece_0'));       
         //Récupère les coordonnées du coin haut gauche de la pièce
         var pos = $(this).position();
         
@@ -135,7 +131,7 @@ $(document).ready(function(){
             console.log("update "+ state);
             
             request = {"action": "mymove", "argument2": tuilevidedir};
-            send_info(request);
+            send_info('/action', request);
         }
         else {
             alert("Vous ne pouvez pas déplacer cette tuile");
@@ -143,12 +139,12 @@ $(document).ready(function(){
         });
     
     //Fonction d'envoi de données au module python
-    function send_info(to_send){
+    function send_info(receiver, to_send){
         $.ajax({
             type : 'GET',
-            url : '/action',
+            url : receiver,
             data : to_send,
-            success : function(){console.log("Demande de mélange effectuée");},
+            success : function(){console.log("Retour python effectué");},
             error : function(){console.log("BSoD : Erreur fatale pendant la demande de mélange " + Object.values(to_send)[0]);}
             })
             // On exécute cette fonction au retour
@@ -172,7 +168,7 @@ $(document).ready(function(){
                     }
                 }
                 if (Object.values(returned)[0] == "mymove"){
-                    console.log("swap done")
+                    console.log("swap of pieces done")
                 }
             })
     }
@@ -184,7 +180,7 @@ $(document).ready(function(){
         
         if (button_id == "btn_melange"){
                 request = {"action":"shuffle", "argument2":state};
-                send_info(request);         
+                send_info('/action', request);         
         }
     });
 
