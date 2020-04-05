@@ -28,15 +28,9 @@
 
     
 
-    {% block content %}
-
-        
-
-    
-
     <div>
 
-        <h1 class="panel-title"  style="text-align:center"> <strong>CHIU Didier, VAZ-PINTO Nicolas, Projet Bloc 5</strong></h1>
+        <h1 class="panel-title"  style="text-align:center"> <strong>CHIU Didier, VAZ-PINTO Nicolas, Projet Bloc 5 (Algorithmique Avancée)</strong></h1>
 
     
 
@@ -46,55 +40,79 @@
 
            
 
+   <h2>Projet bloc 5</h2>
+
+    <div class="shadowbox" id="p1">
+
+    Vous êtes sur la page du projet du bloc 5 pour le DIU EIL organisé à l'Université de Polynésie-Française en Mars 2020<br>
+
+    Réalisé par <strong>CHIU Didier</strong> et <strong>VAZ-PINTO Nicolas</strong> dans le cadre de <a href="https://diu-eil.gricad-pages.univ-grenoble-alpes.fr/diu-eil-upf-5/">l'évaluation </a>encadrée par <strong>Jean-Marc VINCENT</strong> (Université Grenoble-Alpes)<br>
+
+    Le projet est à destination des élèves de Terminale NSI et est centré autour du jeu du taquin<br>
+
+    </div>
+
    
 
-    
+   <h2>Un peu d'histoire...</h2>
 
-    {% endblock %}    
+    <div class="shadowbox" id="p2">
 
-    <h2>Exemple 3x3 </h2>
+    Le taquin est un jeu solitaire en forme de damier créé vers 18701 aux États-Unis. <br>
 
-    <ul>
+    Sa théorie mathématique a été publiée par l'American Journal of mathematics pure and applied en 1879. <br><br>
 
-        <li>Cliquer pour échanger une tuile avec la tuile vide</li>
+    En 1891, son invention fut revendiquée par Sam Loyd, au moment où le jeu connaissait un engouement considérable, tant aux États-Unis qu'en Europe. <br>
 
-        <li>Attention !! Le bouton ne marche que sur le plateau initialement rangé : ne pas cliquer deux fois de suite !!</li>
+    Il est composé de 15 petits carreaux numérotés de 1 à 15 qui glissent dans un cadre prévu pour 16. <img src="../static/taquin4.png" align="right" width="15%"><br>
 
-    </ul>
+    Il consiste à remettre dans l'ordre les 15 carreaux à partir d'une configuration initiale quelconque.<br><br>
 
-    <div>
+    Le principe a été étendu à toutes sortes d'autres jeux. La plupart sont à base de blocs rectangulaires plutôt que carrés, 
 
-    <a href="/shuffle"><input type="button" id="btn_melange" value="Voir une séquence d'animation"></a>
+    <img src="../static/rubikscube.jpg" align="right" width="9%"><br>
+
+    mais le but est toujours de disposer les blocs d'une façon déterminée par un nombre minimal de mouvements. <br>
+
+    Le Rubik's Cube est aujourd'hui considéré comme l'un des « descendants » du taquin. <br><br><br>
+
+    Source : <a href="https://fr.wikipedia.org/wiki/Taquin">Wikipedia</a>
 
     </div>
 
     
 
-        <div class="wrapper" id="taquin">
+   <h2>Taquin 3x3</h2>
 
-          <div class="piece" id="piece_0"><img src="../static/0.png"></div>
+    <div class="shadowbox" id="p3">
 
-          <div class="piece" id="piece_1"><img src="../static/1.png"></div>
+    Le projet du bloc 5 s'articulera autour de la réalisation d'un taquin 3x3 (9 cases)
 
-          <div class="piece" id="piece_2"><img src="../static/2.png"></div>
+    <img src="../static/taquin3.png" align="right" width="20%"><br>
 
-          <div class="piece" id="piece_3"><img src="../static/3.png"></div>
+    Autres éléments lié aux consignes pour le projet à mettre ici<br>
 
-          <div class="piece" id="piece_4"><img src="../static/4.png"></div>
+        <ul>
 
-          <div class="piece" id="piece_5"><img src="../static/5.png"></div>
+            <li> truc 1 </li>
 
-          <div class="piece" id="piece_6"><img src="../static/6.png"></div>
+            <li> truc 2 </li>
 
-          <div class="piece" id="piece_7"><img src="../static/7.png"></div>
+            <li> truc 3 </li>
 
-          <div class="piece" id="piece_8"><img src="../static/8.png"></div>
-
-        </div>
+        </ul>
 
     
 
+    <br>
 
+    <a href="/next"><input type="button" class="btn" id="btn_gotoplay" value="<===== Mélanger le Taquin et commencer à jouer =====>"></a>
+
+    
+
+    </div>
+
+    
 
   </body>
 
