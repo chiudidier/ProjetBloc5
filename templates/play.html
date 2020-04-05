@@ -1,46 +1,99 @@
 <!doctype html>
+
 <html lang="fr">
+
   <head>
+
     <title>DIU EIL UPF Projet Bloc 5</title>
+
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+
     <meta charset="utf-8">
+
     <script src="../static/jquery-3.4.1.min.js"></script>
+
     <script src="../static/gsap.min.js"></script>
+
     <script src="../static/process.js"></script>
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
   </head>
+
   
+
   
+
   <body>
+
     
-    <div>
-        <h1 class="panel-title"  style="text-align:center"> <strong>CHIU Didier, VAZ-PINTO Nicolas, Projet Bloc 5 (Algorithmique Avancée)</strong></h1>
-    
-    <div class="panel-body">
-        <form method="post" action="" accept-charset="UTF-8" role="form">
-    
-    <h2>Taquin 3x3 </h2>
-    
-    <h3>Règles du jeu :</h3>
-    <ul>
-        <li>Cliquer pour échanger une tuile avec la tuile vide</li>
-        <li>Pour abandonner et voir la résolution (automatique !!) du taquin, cliquer sur le bouton ci-dessous</li>
-    </ul>
-    {% block content %}  
-    <!--<p>Variable passée : {{ depart }} </p>-->
-    <input type="hidden"  id="inittaquin" value="{{ depart }}">
-        <div class="wrapper" id="taquin">
-        {% for i in range(0,9) %} 
-            <div class="piece" id="piece_{{ depart[i] }}"><img src="../static/{{ depart[i] }}.png"></div>
-        {% endfor %}           
-        </div>
-    
-    
-    {% endblock %}
 
     <div>
-    <a href="/action"><input type="button" class="btn" id="btn_melange" value="Résoudre automatiquement le taquin (ne marche pas encore)"></a>
+
+        <h1 class="panel-title"  style="text-align:center"> <strong>CHIU Didier, VAZ-PINTO Nicolas, Projet Bloc 5 (Algorithmique Avancée)</strong></h1>
+
+    
+
+    <div class="panel-body">
+
+        <form method="post" action="" accept-charset="UTF-8" role="form">
+
+    
+
+    <h2>Taquin 3x3 </h2>
+
+    
+
+    <h3>Règles du jeu :</h3>
+
+    <div class="shadowbox" id="p4">
+
+    <ul>
+
+        <li>Cliquer pour échanger une tuile avec la tuile vide</li>
+
+        <li>On chercher à retrouver la position initiale : <br><img src="../static/taquin3.png" width="10%"></li>
+
+        <li>Pour abandonner et voir la résolution (automatique !!) du taquin, cliquer sur le bouton ci-dessous</li>
+
+    </ul>
+
     </div>
+
+    <br>
+
+    {% block content %}  
+
+    <!--<p>Variable passée : {{ depart }} </p>-->
+
+    <input type="hidden"  id="inittaquin" value="{{ depart }}">
+
+        <div class="wrapper" id="taquin">
+
+        {% for i in range(0,9) %} 
+
+            <div class="piece" id="piece_{{ depart[i] }}"><img src="../static/{{ depart[i] }}.png"></div>
+
+        {% endfor %}           
+
+        </div>
+
+    
+
+    
+
+    {% endblock %}
+
+
+
+    <div>
+
+    <a href="/action"><input type="button" class="btn" id="btn_melange" value="Résoudre automatiquement le taquin (ne marche pas encore)"></a>
+
+    </div>
+
         
+
   </body>
+
 </html>
