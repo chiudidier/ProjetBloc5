@@ -115,20 +115,27 @@ $(document).ready(function(){
             
             //On cherche dans quel sens bouger avant de faire l'échange
             if (pos_left == tuilevideleft && pos_top < tuilevidetop){
-                echange($(this),"B", 0.5);        
+                echange($(this),"B", 0.5);     
+                var tuilevidedir = "H";   
             }
             else if (pos_top > tuilevidetop){
                 echange($(this),"H", 0.5);
+                var tuilevidedir = "B";
             }
             if (pos_top == tuilevidetop && pos_left < tuilevideleft){
-                echange($(this),"D", 0.5);        
+                echange($(this),"D", 0.5); 
+                var tuilevidedir = "G";       
             }
             else if (pos_left > tuilevideleft){
                 echange($(this),"G", 0.5);
+                var tuilevidedir = "D";
             }
-            //Mise à jour de la chaîne représentant l'état
+            //Mise à jour de la chaîne représentant l'état (équivalent à Etat(untaquin) dans la partie python)
             state = update(state, numero);
             console.log("update "+ state);
+            
+            request = {"action": "mymove", "argument2": tuilevidedir};
+            send_info(request);
         }
         else {
             alert("Vous ne pouvez pas déplacer cette tuile");
@@ -139,23 +146,33 @@ $(document).ready(function(){
     function send_info(to_send){
         $.ajax({
             type : 'GET',
-            url : '/shuffle',
+            url : '/action',
             data : to_send,
             success : function(){console.log("Demande de mélange effectuée");},
-            error : function(){alert("BSoD : Erreur fatale pendant la demande de mélange");}
+            error : function(){console.log("BSoD : Erreur fatale pendant la demande de mélange " + Object.values(to_send)[0]);}
             })
             // On exécute cette fonction au retour
             // Pour l'instant, on montre un mélange des tuiles via une animation
-            .done(function(data){
-                // console.log("données reçues " + data + " taille "+ data.length);
+            .done(function(data){               
+                // produit un dictionnaire à partir des données envoyées par python
+                var returned = JSON.parse(data); 
+                console.log("return data => clefs " + Object.keys(returned)[0] + " " + Object.keys(returned)[1]);
+                console.log("return data => valeurs " + Object.values(returned)[0] + " " + Object.values(returned)[1]);
                 
-                //Création d'une timeline pour l'animation
-                var shuffleTL = gsap.timeline();
-                shuffleTL
-                for (i=0; i<data.length/2; i++){
+                if (Object.values(returned)[0] == "shuffle"){
+                    var stringtoprocess = Object.values(returned)[1];
+                    //Création d'une timeline pour l'animation
+                    var shuffleTL = gsap.timeline();
                     shuffleTL
-                        .to($("#piece_"+data[2*i]), 0.5, getdir(data[2*i+1]), "+=0.5")
-                        .to($("#piece_0"), 0.5, oppositedir(data[2*i+1]), "-=0.5")
+                    for (i = 0; i < stringtoprocess.length/2; i++){
+                        shuffleTL
+                            .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
+                            .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
+                
+                    }
+                }
+                if (Object.values(returned)[0] == "mymove"){
+                    console.log("swap done")
                 }
             })
     }
@@ -166,7 +183,7 @@ $(document).ready(function(){
         button_id = $(this).attr('id');
         
         if (button_id == "btn_melange"){
-                request = {"argument1":"melange", "argument2":state};
+                request = {"action":"shuffle", "argument2":state};
                 send_info(request);         
         }
     });
