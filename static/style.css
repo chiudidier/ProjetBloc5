@@ -60,21 +60,21 @@ ul li{
   background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
 }
 
-#p1 {
+#sbox1 {
   height: 4em;
 }
 
-#p2 {
+#sbox2 {
 
   height: 17em;
 }
 
-#p3 {
+#sbox3 {
   width: 55em;
   height: 13em;
 }
 
-#p4 {
+#sbox4 {
   width: 55em;
   height: 11em;
 }
@@ -85,8 +85,8 @@ h1 {
   text-align: center;
   font-weight: normal;
   text-decoration: underline;
-  border: 3px blue outset;
-  display: flex;
+  border: 4px blue outset;
+  display: inline;
 	
 }
 
