@@ -23,6 +23,13 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Déplacement buggué si on click trop vite sur une tuile
 - Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
 
+**05-04-2020** v0.41
+- Connexion entre le bouton d'abandon et le module python : création de la liste des mouvements à faire pour arriver à la solution
+- Cette recherche de chemin n'aboutit pas dans tous les cas : 
+  - au delà d'environ une quinzaine de coups, le module python plante
+  - message d'erreur : An exception has occurred, use %tb to see the full traceback. SystemExit: -9
+ - Un enregistrement d'une résolution en 14 coups est disponible
+
 **05-04-2020** v0.4
 - Création d'une page play.html initialisée avec un taquin mélangé
 - MAJ de la page index.html pour la présentation du projet
