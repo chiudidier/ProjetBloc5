@@ -3,7 +3,7 @@ Jeu du Taquin 3x3
 
 ## Structure 
 Le projet est constitué de 2 principaux modules relativement indépendants :
-- Un module Python pour faire de la recherche de solution via un parcours en largeur dans un arbre d'états,
+- Un module Python pour faire de la recherche de solution via un parcours en largeur dans un premier temps dans un arbre d'états. Ensuite remplacé par une fonction. Recherche de la solution par un parcours en profondeur limité par la fonction précédente.
 - Un module Web (notamment JS) qui va permettre d'afficher l'état du jeu et de représenter les mouvements des tuiles
 
 ## Module Python
@@ -22,6 +22,11 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile
 - Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
+- Bug sur un certain états qui renvoient un nombre de coups abérant ou plante le programme.
+
+**05-04-2020** v0.42
+- Légère amélioration de la vitesse de calcul avec l'introdution d'une fonctioon qui calcul le nombre de coup pour aller à la solution sans parcourir l'arbre en largeur.
+- Amélioration de l'interface d'aide en indiquant directement le coup à jouer au lieu de la position à obtenir.
 
 **05-04-2020** v0.41
 - Connexion entre le bouton d'abandon et le module python : création de la liste des mouvements à faire pour arriver à la solution
