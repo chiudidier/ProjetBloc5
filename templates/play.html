@@ -20,29 +20,29 @@
 
   </head>
 
-  
 
-  
+
+
 
   <body>
 
-    
+
 
     <div>
 
         <h1 class="panel-title"  style="text-align:center"> <strong>CHIU Didier, VAZ-PINTO Nicolas, Projet Bloc 5 (Algorithmique Avancée)</strong></h1>
 
-    
+
 
     <div class="panel-body">
 
         <form method="post" action="" accept-charset="UTF-8" role="form">
 
-    
+
 
     <h2>Taquin 3x3 </h2>
 
-    
+
 
     <h3>Règles du jeu :</h3>
 
@@ -62,25 +62,25 @@
 
     <br>
 
-    {% block content %}  
+    {% block content %}
 
     <!--<p>Variable passée : {{ depart }} </p>-->
 
-    <input type="hidden"  id="inittaquin" value="{{ depart }}">
+    <!--<input type="hidden"  id="inittaquin" value="{{ depart }}">-->
 
-        <div class="wrapper" id="taquin">
+        <div class="wrapper" id="taquin" etat-initial = "{{ depart }}" etat = "{{ depart }}" compteur="0">
 
-        {% for i in range(0,9) %} 
+        {% for i in range(0,9) %}
 
-            <div class="piece" id="piece_{{ depart[i] }}"><img src="../static/{{ depart[i] }}.png"></div>
+            <div class="piece" id="piece_{{ depart[i] }}" indice ="{{ depart[i]}}"><img src="../static/{{ depart[i] }}.png"></div>
 
-        {% endfor %}           
+        {% endfor %}
 
         </div>
 
-    
 
-    
+
+
 
     {% endblock %}
 
@@ -92,7 +92,7 @@
 
     </div>
 
-        
+
 
   </body>
 
