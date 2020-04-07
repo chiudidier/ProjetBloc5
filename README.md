@@ -22,7 +22,12 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile
 - Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
-- Bug sur un certain états qui renvoient un nombre de coups abérant ou plante le programme.
+- fonction qui calcul le nombre de coup restant erronée sur coups supérieurs à 15.
+
+**06-04-2020** v0.4.3
+- Correction de l'automate de détermination des états suivants
+- Mise en place efficace de l'algorithme IDA* qui permet de faire une rehcerche en profondeur avec horison (sans parcourir l'arbre sur chaque branche)
+- La fonction du calcul du nombre de coup est éronnée sur le profondeur supéreiur à 15, il faut la retravailler.
 
 **05-04-2020** v0.42
 - Légère amélioration de la vitesse de calcul avec l'introdution d'une fonctioon qui calcul le nombre de coup pour aller à la solution sans parcourir l'arbre en largeur.
