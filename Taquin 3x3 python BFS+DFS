@@ -196,7 +196,21 @@ class Etat():
             return(True)
         else:
             return(False)
-			
+
+def comparetaquins(taquin1,taquin2): # fonction qui compare 2 taquins proche et indique le mouvement 
+	origine=taquin1.rangzero()
+	finale=taquin2.rangzero()
+	move=origine-finale
+	if move==-3:
+		deplacement='b'
+	elif move==3:
+		deplacement='h'
+	elif move==1:
+		deplacement='g'
+	elif move==-1:
+		deplacement='d'
+	return(deplacement)
+
 def txt2list(txt):
 	"""
     Fonction permettant de convertir une chaine de caractères en liste pour passer d'un (objet de classe) Etat à un Taquin'
@@ -316,7 +330,8 @@ while montaquin.gagnant() == False:
     nextmove = chemin.pop()
     nexttaquin = Taquin(nextmove)
     print('meilleur coup suivant :')
-    print(nexttaquin)
+    aidemove=comparetaquins(montaquin,nexttaquin)
+    print(aidemove)
     
     # demande le coup à jouer et applique le mouvement
     move = input('Que voulez vous jouer (h,b,d,g): ')
