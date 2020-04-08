@@ -161,7 +161,7 @@ class Etat():
         if position == 3:
             eH=self.val[3]+self.val[1]+self.val[2]+self.val[0]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
             eB=self.val[0]+self.val[1]+self.val[2]+self.val[6]+self.val[4]+self.val[5]+self.val[3]+self.val[7]+self.val[8]+','
-            eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[5]+self.val[4]+self.val[6]+self.val[7]+self.val[8]+','
+            eD=self.val[0]+self.val[1]+self.val[2]+self.val[4]+self.val[3]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
             eG=''
         if position == 4:
             eH=self.val[0]+self.val[4]+self.val[2]+self.val[3]+self.val[1]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
