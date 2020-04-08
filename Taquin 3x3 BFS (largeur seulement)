@@ -1,0 +1,220 @@
+from math import *
+from random import *
+
+class Taquin():
+#gestion de l'affichage, du deplacement et de la victoire du taquin
+	def __init__(self,txt):
+		liste=[]
+		for i in txt:
+			liste.append(i)
+		self.contenu=liste # la liste qui représente la taquin en memoire
+		 #gestion de la taille si on veut travailler sur un taquin plus grand mais toujours carré
+		self.nbcol=int(sqrt(len(liste)))
+		self.nblig=int(sqrt(len(liste)))	
+		
+	def __str__(self):#permet un affichage conventionnel en carré
+		affichage=''
+		for i in range (0,self.nbcol):
+			affichage=affichage+str(self.contenu[i])+' '
+		affichage=affichage+'\n'
+		for i in range (self.nbcol,self.nbcol*2):
+			affichage=affichage+str(self.contenu[i])+' '
+		affichage=affichage+'\n'
+		for i in range (self.nbcol*2,self.nbcol*3):
+			affichage=affichage+str(self.contenu[i])+' '
+		affichage=affichage+'\n'
+		return(affichage)
+	
+	def rangzero(self):#permet de donner la position du zero, donc de la case à déplacer
+		return(self.contenu.index('0'))
+	
+	def inverser(self,rang1,rang2):
+		# permet d´inverser la position de 2 valeurs dans la liste. Utile pour les déplacements
+		tmp1=self.contenu[rang1]
+		tmp2=self.contenu[rang2]
+		self.contenu[rang1]=tmp2
+		self.contenu[rang2]=tmp1
+	
+	def haut(self):# vérifie si le déplacement est faisable et réalise l'inversion des positions
+		rang=self.rangzero()
+		if rang>2:
+			self.inverser(rang,rang-3)
+	
+	def bas(self):# vérifie si le déplacement est faisable et réalise l'inversion des positions
+		rang=self.rangzero()
+		if rang<6:
+			self.inverser(rang,rang+3)
+	
+	def gauche(self):# vérifie si le déplacement est faisable et réalise l'inversion des positions
+		rang=self.rangzero()
+		if rang!=0 and rang!=3 and rang!=6:
+			self.inverser(rang,rang-1)
+
+	def droite(self):# vérifie si le déplacement est faisable et réalise l'inversion des positions
+		rang=self.rangzero()
+		if rang!=2 and rang!=5 and rang!=8:
+			self.inverser(rang,rang+1)
+	
+	def melanger(self,profondeur):
+		# réalise une série de mouvement aléatoire à partir d'une position initiale pour mélanger le taquin
+		for i in range (0,profondeur):
+			move=randint(1,4)
+			if move==1:
+				self.haut()
+			elif move==2:
+				self.bas()
+			elif move==3:
+				self.droite()
+			elif move==4:
+				self.gauche()
+		
+	def gagnant(self):# vérifie si la position actuelle est la position gagnante 
+		averif=etat(self)
+		if averif.val=='012345678':
+			return(True)
+		else:
+			return(False)
+
+class etat():# permet de retenir un etat du taquin pour calculer les suivants.
+	
+	def __init__(self,taquin):
+		etat=''
+		longueur=0
+		for i in taquin.contenu:
+			etat=etat+str(i)
+			longueur=longueur+1
+		self.val=etat
+		self.len=longueur
+	
+	def __str__(self):
+		rendu=''
+		for i in range (0,self.len):
+			rendu=rendu+str(self.val[i])
+		return(rendu)
+		
+	def etatzero(self):# donne la position du zero pour calculer les suivants
+		for i in range(0,self.len):
+			if self.val[i]=='0':
+				return(i)
+	
+	def suivants(self):
+		# automate qui prend un etat en entrée et renvoie une chaine avec l'ensemble de setats accessibles depuis l'etat d'entrée
+		position=self.etatzero()
+		eH=''
+		eB=''
+		eD=''
+		eG=''
+		if position==0:
+			eH=''
+			eB=self.val[3]+self.val[1]+self.val[2]+self.val[0]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eD=self.val[1]+self.val[0]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eG=''
+		if position==1:
+			eH=''
+			eB=self.val[0]+self.val[4]+self.val[2]+self.val[3]+self.val[1]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eD=self.val[0]+self.val[2]+self.val[1]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eG=self.val[1]+self.val[0]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+		if position==2:
+			eH=''
+			eB=self.val[0]+self.val[1]+self.val[5]+self.val[3]+self.val[4]+self.val[2]+self.val[6]+self.val[7]+self.val[8]+','
+			eD=''
+			eG=self.val[0]+self.val[2]+self.val[1]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+		if position==3:
+			eH=self.val[3]+self.val[1]+self.val[2]+self.val[0]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eB=self.val[0]+self.val[1]+self.val[2]+self.val[6]+self.val[4]+self.val[5]+self.val[3]+self.val[7]+self.val[8]+','
+			eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[5]+self.val[4]+self.val[6]+self.val[7]+self.val[8]+','
+			eG=''
+		if position==4:
+			eH=self.val[0]+self.val[4]+self.val[2]+self.val[3]+self.val[1]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+			eB=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[7]+self.val[5]+self.val[6]+self.val[4]+self.val[8]+','
+			eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[5]+self.val[4]+self.val[6]+self.val[7]+self.val[8]+','
+			eG=self.val[0]+self.val[1]+self.val[2]+self.val[4]+self.val[3]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
+		if position==5:
+			eH=self.val[0]+self.val[1]+self.val[5]+self.val[3]+self.val[4]+self.val[2]+self.val[6]+self.val[7]+self.val[8]+','
+			eB=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[8]+self.val[6]+self.val[7]+self.val[5]+','
+			eD=''
+			eG=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[5]+self.val[4]+self.val[6]+self.val[7]+self.val[8]+','
+		if position==6:
+			eH=self.val[0]+self.val[1]+self.val[2]+self.val[6]+self.val[4]+self.val[5]+self.val[3]+self.val[7]+self.val[8]+','
+			eB=''
+			eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[7]+self.val[6]+self.val[8]+','
+			eG=''
+		if position==7:
+			eH=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[7]+self.val[5]+self.val[6]+self.val[4]+self.val[8]+','
+			eB=''
+			eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[8]+self.val[7]+','
+			eG=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[7]+self.val[6]+self.val[8]+','
+		if position==8:
+			eH=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[8]+self.val[6]+self.val[7]+self.val[5]+','
+			eB=''
+			eD=''
+			eG=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[4]+self.val[5]+self.val[6]+self.val[8]+self.val[7]+','
+		rendu=eH+eB+eD+eG
+		return(rendu)
+		
+		def gagnant(self):# permet de verifier si un etat est gagnant
+			if self.val=='012345678':
+				return(True)
+			else:
+				return(False)
+			
+def txt2list(txt):
+	# fonctionpermettant de convertir une chaine de caractere en liste pour passer d'un etat a un taquin'
+	elmnt=''
+	rendu=[]
+	for i in txt:
+		if i!=',':
+			elmnt=elmnt+i
+		else:
+			rendu.append(elmnt)
+			elmnt=''
+	return(rendu)
+
+def bfs(taquinzero):
+	# fonction qui part d'une position initiale du taquin et effectue un parcour en largeur  jusqu'a ce qu'elle trouve la solution gagnant. A ce moment elle renvoie la profondeur de la solution trouvée. En pratique elle test chaque état d'une profondeur donnée un par un. Si elle ne trouve pas la combinaison gagnante elle passe à la profondeur suivante.
+	gagnant='012345678'# etat gagnant
+	e0=etat(taquinzero)
+	A=[e0.val]#position initiale
+	p=0	# profondeur de départ
+	while A!=[]:
+		B=[]# initialisation de la liste des resultats
+		for i in range(0,len(A)):# boucle qui test un par un les etats de profondeur p
+			if A[i]==gagnant:# verifi si l'etat est gagnant
+				return(p)# renvoie la profondeur de la solution
+			Ttmp=Taquin(A[i])# convertie le texte testé en taquin
+			Etmp=etat(Ttmp)# convertie le taquin en etat
+			Ltmp=txt2list(Etmp.suivants())# calculs tous les etats suivants de l'etat testé'
+			for i in Ltmp:
+				B.append(i)# ajoute chaque suivant à la liste qui sera testé à la profondeur suivante
+		A=B
+		p=p+1# augmente la profondeur de 1
+
+#main
+
+montxt='012345678'# position initiale = solution
+montaquin=Taquin(montxt)# création du taquin
+
+# mélange en realisant 15 coups aléatoires à partir de la position initiale pour garantir que la position obtenu soit bien solutionnable.
+while montaquin.gagnant():
+	montaquin.melanger(15)
+
+print(montaquin)
+
+while montaquin.gagnant()==False:# boucle principale du jeu. Sort qaund le taquin est solutionné
+	reste=bfs(montaquin)# calcul la profondeur minimum de la solution
+	print(reste,' mouvements au moins pour terminer.')# affiche l'aide
+	move=input('\n que voulez vous jouer (h,b,d,g): ')# demande le coup à jouer et applique le mouvement
+	if move=='h':
+		montaquin.haut()
+	elif move=='b':
+		montaquin.bas()
+	elif move=='d':
+		montaquin.droite()
+	elif move=='g':
+		montaquin.gauche()
+	print(montaquin)
+
+print('Bravo vous avez gagné !')
+
+
+
