@@ -24,8 +24,12 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
 - fonction qui calcul le nombre de coup restant erronée sur coups supérieurs à 15.
 
+**07-04-2020** v0.4.3
+- Correction de l'automate de détermination des états suivants sur toutes les versions
+- renommage des versions pour coller au document élève.
+
 **06-04-2020** v0.4.3
-- Correction de l'automate de détermination des états suivants
+- Correction de l'automate de détermination des états suivants sur IDA*
 - Mise en place efficace de l'algorithme IDA* qui permet de faire une rehcerche en profondeur avec horison (sans parcourir l'arbre sur chaque branche)
 - La fonction du calcul du nombre de coup est éronnée sur le profondeur supéreiur à 15, il faut la retravailler.
 
