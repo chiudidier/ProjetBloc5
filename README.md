@@ -26,7 +26,8 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **07-04-2020** v0.4.3
 - Correction de l'automate de détermination des états suivants sur toutes les versions
-- renommage des versions pour coller au document élève.
+- Renommage des versions pour coller au document élève.
+- Ajout de la fonction comparetaquin au code Taquin 3x3 BFS+DFS (qui permet de comparer 2 taquins proches pour déterminer le mouvement utile pour passer de l'un à l'autre) 
 
 **06-04-2020** v0.4.3
 - Correction de l'automate de détermination des états suivants sur IDA*
