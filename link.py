@@ -1,5 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""
+Created on Sat Mar 21 12:37:34 2020
+
+@author: d.chiu, n.vaz-pinto
+"""
 
 #============================
 # Importation des librairies
@@ -15,10 +20,10 @@ app = Flask(__name__)
 
 # le fichier taquin.py contient :
 # - les classes définies pour le jeu : Taquin et Etat
-# - les fonctions bfs (parcours en largeur) et dfs (parcours en profondeur)
+# - les fonctions bfs (parcours en largeur) et dls (parcours en profondeur)
 # - une fonctions pratique txt2list 
 from taquin import *
-
+import time
 #=========================================================================
 # Partie de code tirée du fichier de Nicolas pour utiliser ses fonctions
 #=========================================================================
@@ -30,45 +35,6 @@ def initializetaquin(machaine):
     # création du taquin
     montaquin=Taquin(machaine)
     return montaquin
-
-def playtaquin():    
-    montaquin = initializetaquin("012345678")
-    # mélange en réalisant 15 coups aléatoires à partir de la position initiale pour garantir que la position obtenue soit bien solutionnable.
-    while montaquin.gagnant():
-    	montaquin.melanger(15)
-    print('taquin a résoudre:')
-    print(montaquin)
-    
-    # boucle principale du jeu. Sort quand le taquin est solutionné
-    while montaquin.gagnant() == False:
-    	# calcul la profondeur minimum de la solution
-        reste = bfs(montaquin)
-        chemin = []
-        etatzero = Etat(montaquin)
-        dfs(reste,etatzero,0,chemin)
-        # affiche l'aide
-        print(reste, 'mouvements au moins pour terminer. \nSolution =', chemin)
-        
-        # retire de la liste des états suivants le premier pour affichage
-        nextmove = chemin.pop()
-        nexttaquin = Taquin(nextmove)
-        print('meilleur coup suivant :')
-        print(nexttaquin)
-        
-        # demande le coup à jouer et applique le mouvement
-        move = input('Que voulez vous jouer (h,b,d,g): ')
-        if move == 'h':
-            montaquin.haut()
-        elif move == 'b':
-            montaquin.bas()
-        elif move == 'd':
-            montaquin.droite()
-        elif move == 'g':
-            montaquin.gauche()
-        print(montaquin)
-    
-    print('Bravo vous avez gagné !')
-
 
 def whereTo(etat1, etat2):
     pos_zero_etat1 = etat1.index('0')
@@ -112,11 +78,13 @@ def MayTheForceBeWithYou():
 def ANewHope():
     #taquindejeu est initialisé au début à "012345678" par la fonction initializetaquin (voir plus haut)
     #mélange du taquin
-    taquindejeu.melanger(25)
+    taquindejeu.melanger(35)
     print("Le taquin au départ", Etat(taquindejeu).val) #contient par exemple "312645780"
     #chaîne à envoyer pour transmettre l'état 
     machaine = Etat(taquindejeu).val
     
+    # Pour faire planter : '172356840'
+    # En 15 coups : '301756482'
     return render_template('play.html', depart=machaine) 
     
 @app.route('/action')
@@ -132,7 +100,7 @@ def ReturnOfTheJedi():
         
         # Si on a clické sur une tuile dans la page web
         if (actionaskedbyJS == "mymove"):
-            if argument2fromJS == 'H':
+            if argument2fromJS == 'H': 
                 taquindejeu.haut()
             elif argument2fromJS == 'B':
                 taquindejeu.bas()
@@ -144,15 +112,31 @@ def ReturnOfTheJedi():
             print("état du jeu après click", Etat(taquindejeu))
             argument2_tosend = "done"
         
-        # Si on a clické sur le boutton dans la page web
-        elif (actionaskedbyJS == "giveup"):
+        # On lance DLS 
+        elif (actionaskedbyJS == "giveup1"):
+            #print("état du jeu à l'abandon", argument2fromJS)
+            #taquindejeu = initializetaquin(argument2fromJS)
+            # Pour tester avec une chaîne prédéfinie
             
             if taquindejeu.gagnant() == False:
-                # calcul la profondeur minimum de la solution
+                
+                # calcul la profondeur minimum de la solution via BFS
+                print("début BFS")
+                debut=time.time()
                 reste = bfs(taquindejeu)
+                fin=time.time() - debut
+                print("fin BFS", fin)
+                
+                # préparation pour DLS
                 chemin = []
                 etatzero = Etat(taquindejeu)
-                dfs(reste,etatzero,0,chemin)
+                print("VAR etatzero", etatzero, "reste", reste, "chemin", chemin)
+                # recherche du chemin vers la solution via DLS
+                print("début DLS")
+                debut=time.time()
+                dls(reste, etatzero, 0, chemin)
+                fin=time.time() - debut
+                print("fin DLS", fin)
                 
                 # affiche l'aide
                 print(reste, 'mouvements au moins pour terminer. \nSolution =', chemin)
@@ -169,13 +153,46 @@ def ReturnOfTheJedi():
                     #print("step zero", etatzero)
                     
                     etat2 = nextmove
-                    print("who really needs to move", whereTo(etat1, etat2))
+                    #print("who really needs to move", whereTo(etat1, etat2))
                     toVictory += whereTo(etat1, etat2)
                     etat1 = nextmove
                 print("road to victory", toVictory)
-            
+        
             #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
             argument2_tosend = toVictory #1G4H3D6H7G8G5B2B
+        
+        elif (actionaskedbyJS == "giveup2"):
+            # On lance IDA*
+            
+            if taquindejeu.gagnant() == False:
+                print("Début IDA*")
+                chemin = []
+                debut=time.time()
+                ida(taquindejeu, chemin)
+                fin=time.time() - debut
+                print("Fin IDA*", fin)
+                
+                etatzero = Etat(taquindejeu)
+                etat1 = etatzero.val
+                toVictory = ''
+                    
+                while(chemin != []):
+                    nextmove = chemin.pop()
+                    nexttaquin = Taquin(nextmove)
+                    #print('meilleur coup suivant :')
+                    #print(nexttaquin)     
+                    #print("step zero", etatzero)
+                    
+                    etat2 = nextmove
+                    #print("who really needs to move", whereTo(etat1, etat2))
+                    toVictory += whereTo(etat1, etat2)
+                    etat1 = nextmove
+                print("This is the way", toVictory)
+        
+            #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
+            argument2_tosend = toVictory #1G4H3D6H7G8G5B2B
+        
+        
         else:
             argument2_tosend="NULL"
     else:
