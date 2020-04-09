@@ -35,14 +35,28 @@ Par Equipe DIU Projet bloc 5 - Didier CHIU - Nicolas VAZ-PINTO - 2020
 #*/
 
 .btn {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   border: none;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 24px;
+  font-size: 32px;
+}
+
+#btn_helpme {
+  background-color: #4CAF50; /* Green */
+}
+
+#btn_giveup1 {
+  background-color: #1dd1a1; /* Jade Dust */
+
+}
+
+#btn_giveup2 {
+  background-color: #00d2d3; /* Wild Carribean */
+
 }
 
 ul li{
