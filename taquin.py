@@ -161,7 +161,7 @@ class Etat():
         if position == 3:
             eH=self.val[3]+self.val[1]+self.val[2]+self.val[0]+self.val[4]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
             eB=self.val[0]+self.val[1]+self.val[2]+self.val[6]+self.val[4]+self.val[5]+self.val[3]+self.val[7]+self.val[8]+','
-            eD=self.val[0]+self.val[1]+self.val[2]+self.val[3]+self.val[5]+self.val[4]+self.val[6]+self.val[7]+self.val[8]+','
+            eD=self.val[0]+self.val[1]+self.val[2]+self.val[4]+self.val[3]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
             eG=''
         if position == 4:
             eH=self.val[0]+self.val[4]+self.val[2]+self.val[3]+self.val[1]+self.val[5]+self.val[6]+self.val[7]+self.val[8]+','
@@ -261,6 +261,7 @@ def bfs(taquinzero):
         # pour passer à la profondeur suivante
         p = p + 1 
 
+
 def dfs(profmax,etattest,proftest,chemin):
     """
     Fonction qui teste les états suivants à partir d'un état en profondeur tout en se limitant à une profondeur max donnée
@@ -298,3 +299,77 @@ def dfs(profmax,etattest,proftest,chemin):
             return(True)
     return(False)
 
+# fonction qui calcule (sans la chercher dans l'arbre) un minorant du nombre de coup pour atteindre la solution
+def nbcoup(table):
+	# fonction qui calcule (sans la chercher dans l'arbre) un minorant du nombre de coup pour atteindre la solution
+	total=0
+	coord=[(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
+	for i in range (0,len(table)):
+#		print(table[i])
+		if int(table[i])!='0':
+#			print('coordonnee: ',coord[i][0],' ',coord[i][1])
+#			print('val=',table[i])
+#			print('ent/3=',table[i]%3,' modulo/3=',fmod(table[i],3))
+			total=total+(fabs(coord[i][0]-int(int(table[i])/3))+fabs(coord[i][1]-fmod(int(table[i]),3)))
+#			print(total)
+	return(total)
+
+		
+def dfsnew(profmax,etattest,proftest,chemin):
+	#fonction qui test les suivants d'un etat en profondeur tout en se limitant a une profondeur donnée
+	global min
+	gagnant='012345678'
+	taquintest=Taquin(etattest.val)
+#	print('etat testé:',etattest,' min=',min)
+#	print(etattest.val)
+#	tabetatest=txt2list(str(etattest.val))
+#	print(tabetatest)
+#	print('nb coup de etat testé=',nbcoup(tabetatest))
+	evalcoup=proftest+nbcoup(taquintest.contenu) #évalue le nombre de coup minimum pour atteindre la solution en ajoutant le minorant du niombre de coup à la profondeur actuellement testé
+	
+#	print('nb coup a la solution (evalcoup)=',evalcoup)
+#	print('nb coup evalluer',evalcoup)
+	if evalcoup>profmax:# verification si la profondeur maximum n'est pas atteinte en tenant compte de la minoration du nombre de coup
+#		print('nb profmax depassé')
+#		print('min=',min,' evalcoup=',evalcoup)
+		if evalcoup<min:
+			min=evalcoup
+		return(False)
+	if etattest.val==gagnant:# verification si l'etat testé est gagnant ou non
+		return(True)
+	# calcul des suivants de l'etat testé
+	suivantstxt=etattest.suivants()
+	suivantslist=txt2list(suivantstxt)
+	suivantsetats=[]
+
+	
+	for i in suivantslist:# mise en liste des suivants pour traitement
+		taquintmp=Taquin(i)
+		tmp=Etat(taquintmp)
+		suivantsetats.append(tmp)
+	
+
+	for i in suivantsetats:# appel recursif de la fonction de test pour descendre en profondeur
+#		print('suivants : pour (p=',proftest,' etat' ,i.val)
+		if dfsnew(profmax,i,proftest+1,chemin)==True:
+			chemin.append(i.val)#stockage du chemin d'acces pour memoire et retour
+			return(True)
+#	print('branche fausse')
+	return(False)
+
+
+# determine les profondeur minimum des solutions accessibles en réduisant au maximum les plages de recherche
+def ida(taquin0, chemin):
+	global min
+#	print('je passe par ida')
+	etat0=Etat(taquin0)
+	m=nbcoup(taquin0.contenu)
+	print('The Force is this strong with this one', m)
+	while m!=1000:
+		min=1000
+		if dfsnew(m,etat0,0,chemin):
+#			print('m=',m,' min=',min)
+			return(True)
+#		print('maj de m')
+		m=min
+	return(False)
