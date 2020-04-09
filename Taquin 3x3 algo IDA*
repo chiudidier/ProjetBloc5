@@ -177,12 +177,12 @@ def comparetaquins(taquin1,taquin2):
 	return(deplacement)
 
 def nbcoup(table):
-	# fonction qui calcule (sans la chercher dans l'arbre) le nombre de coup pour atteindre la solution
+	# fonction qui calcule (sans la chercher dans l'arbre) un minorant du nombre de coup pour atteindre la solution
 	total=0
 	coord=[(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
 	for i in range (0,len(table)):
 #		print(table[i])
-		if int(table[i])!=0:
+		if int(table[i])!='0':
 #			print('coordonnee: ',coord[i][0],' ',coord[i][1])
 #			print('val=',table[i])
 #			print('ent/3=',table[i]%3,' modulo/3=',fmod(table[i],3))
@@ -224,7 +224,7 @@ def bfs(taquinzero):
 		A=B
 		p=p+1# augmente la profondeur de 1
 
-def ida(taquin0):# determine les profondeur minimum des solutions accessibles ?
+def ida(taquin0):# determine les profondeur minimum des solutions accessibles en réduisant au maximum les plages de recherche
 	global min
 #	print('je passe par ida')
 	etat0=etat(taquin0)
@@ -249,11 +249,11 @@ def dfs(profmax,etattest,proftest,chemin):
 #	tabetatest=txt2list(str(etattest.val))
 #	print(tabetatest)
 #	print('nb coup de etat testé=',nbcoup(tabetatest))
-	evalcoup=proftest+nbcoup(taquintest.contenu)
+	evalcoup=proftest+nbcoup(taquintest.contenu) #évalue le nombre de coup minimum pour atteindre la solution en ajoutant le minorant du niombre de coup à la profondeur actuellement testé
 	
 #	print('nb coup a la solution (evalcoup)=',evalcoup)
 #	print('nb coup evalluer',evalcoup)
-	if evalcoup>profmax:# verification si la profondeur maximum n'est pas atteinte
+	if evalcoup>profmax:# verification si la profondeur maximum n'est pas atteinte en tenant compte de la minoration du nombre de coup
 #		print('nb profmax depassé')
 #		print('min=',min,' evalcoup=',evalcoup)
 		if evalcoup<min:
@@ -295,12 +295,12 @@ print(montaquin)
 
 while montaquin.gagnant()==False:# boucle principale du jeu. Sort qaund le taquin est solutionné
 	chemin=[]
-	reste=nbcoup(montaquin.contenu)
-#	reste2=bfs(montaquin)
-	ida(montaquin)# calcul la profondeur minimum de la solution
+#	reste=nbcoup(montaquin.contenu) # non valide car la fonction nbcoup est un minorant et non un calcul du nombre de coup restant
+#	reste2=bfs(montaquin) # utilise la fonction bfs trop gourmande en calcul
+	ida(montaquin)# initalise la recherche de solution sur le taquin
 #	etatzero=etat(montaquin)
 #	dfs(reste,etatzero,0,chemin)
-	print(reste,' mouvements au moins pour terminer.') # affiche l'aide
+#	print(reste,' mouvements au moins pour terminer.') #
 #	print('solution = ', chemin)
 	nextmove=chemin.pop()
 	nexttaquin=Taquin(nextmove)
