@@ -155,7 +155,7 @@ $(document).ready(function(){
                 console.log("return data => clefs " + Object.keys(returned)[0] + " " + Object.keys(returned)[1]);
                 console.log("return data => valeurs " + Object.values(returned)[0] + " " + Object.values(returned)[1]);
                 
-                if (Object.values(returned)[0] == "giveup"){
+                if (Object.values(returned)[0] == "giveup1"){
                     var stringtoprocess = Object.values(returned)[1];
                     //Création d'une timeline pour l'animation
                     var solveTL = gsap.timeline();
@@ -167,19 +167,45 @@ $(document).ready(function(){
                 
                     }
                 }
+                
+                if (Object.values(returned)[0] == "giveup2"){
+                    var stringtoprocess = Object.values(returned)[1];
+                    //Création d'une timeline pour l'animation
+                    var solveTL = gsap.timeline();
+                    solveTL
+                    for (i = 0; i < stringtoprocess.length/2; i++){
+                        solveTL
+                            .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
+                            .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
+                
+                    }
+                }
+                
                 if (Object.values(returned)[0] == "mymove"){
                     console.log("swap of pieces done")
                 }
             })
     }
     
-    //On écoute le click sur le bouton qui actionne le mélange
-    $("#btn_giveup").click(function(event){
+    //On écoute le click sur le bouton qui actionne la solution via BFS+DFS
+    $("#btn_giveup1").click(function(event){
         event.preventDefault();
         button_id = $(this).attr('id');
         console.log("state", state);
-        if (button_id == "btn_giveup"){
-                request = {"action":"giveup", "argument2":state};
+        if (button_id == "btn_giveup1"){
+                request = {"action":"giveup1", "argument2":state};
+                send_info('/action', request);         
+        }
+    });
+    
+    
+    //On écoute le click sur le bouton qui actionne la solution via IDA*
+    $("#btn_giveup2").click(function(event){
+        event.preventDefault();
+        button_id = $(this).attr('id');
+        console.log("state", state);
+        if (button_id == "btn_giveup2"){
+                request = {"action":"giveup2", "argument2":state};
                 send_info('/action', request);         
         }
     });
