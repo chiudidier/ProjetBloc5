@@ -21,8 +21,9 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile
-- Recherche de la solution optimale à optimiser car trop long au dessus de 15 coups
-- fonction qui calcul le nombre de coup restant erronée sur coups supérieurs à 15.
+
+**08-04-2020** v0.4.3
+- Correction et renommage de l'algo IDA* qui permet de continuer les calcul de solution pour une profondeur jusqu'à 20.
 
 **07-04-2020** v0.4.3
 - Correction de l'automate de détermination des états suivants sur toutes les versions
@@ -31,8 +32,8 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **06-04-2020** v0.4.3
 - Correction de l'automate de détermination des états suivants sur IDA*
-- Mise en place efficace de l'algorithme IDA* qui permet de faire une rehcerche en profondeur avec horison (sans parcourir l'arbre sur chaque branche)
-- La fonction du calcul du nombre de coup est éronnée sur le profondeur supéreiur à 15, il faut la retravailler.
+- Mise en place efficace de l'algorithme IDA* qui permet de faire une rehcerche en profondeur avec horison (sans parcourir l'arbre sur chaque branche)...encore quelques bugs
+- La fonction nbcoup ne calcul pas le nombre  de coup à la solution mais un minorant de ce nombre. On s'en sert ensuite pour limiter la profondeur de recherche effectif de al solution.
 
 **05-04-2020** v0.42
 - Légère amélioration de la vitesse de calcul avec l'introdution d'une fonctioon qui calcul le nombre de coup pour aller à la solution sans parcourir l'arbre en largeur.
