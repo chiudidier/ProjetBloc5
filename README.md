@@ -22,6 +22,13 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours
 
+**09-04-2020** v0.5.3
+- mise à jour des fichiers Python :
+  - Classe Taquin uniquement (plus de classe Etat)
+  - Bonne dénomination des fonctions
+  - MAJ Commentaires
+- supression des version obsolètes
+
 **09-04-2020** v0.5.2
 - Correction du bug lié aux boutons de résolution automatique (on peut clicker plusieurs fois désormais)
 - Ajout d'un compteur de déplacements
