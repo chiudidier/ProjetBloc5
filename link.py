@@ -138,8 +138,8 @@ def ReturnOfTheJedi():
                 fin=time.time() - debut
                 print("fin DLS", fin)
                 
-                # affiche l'aide
-                print(reste, 'mouvements au moins pour terminer. \nSolution =', chemin)
+                # Affiche de l'aide
+                #print(reste, 'mouvements au moins pour terminer. \nSolution =', chemin)
                 
                 # retire de la liste des états suivants le premier pour affichage
                 etat1 = etatzero.val
@@ -157,6 +157,16 @@ def ReturnOfTheJedi():
                     toVictory += whereTo(etat1, etat2)
                     etat1 = nextmove
                 print("road to victory", toVictory)
+                
+                for i in toVictory:
+                    if i == 'B':
+                        taquindejeu.haut()
+                    elif i == 'H':
+                        taquindejeu.bas()
+                    elif i == 'G':
+                        taquindejeu.droite()
+                    elif i == 'D':
+                        taquindejeu.gauche()
         
             #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
             argument2_tosend = toVictory #1G4H3D6H7G8G5B2B
@@ -188,7 +198,17 @@ def ReturnOfTheJedi():
                     toVictory += whereTo(etat1, etat2)
                     etat1 = nextmove
                 print("This is the way", toVictory)
-        
+                
+                #remettre le taquin à la position gagnante de ce côté là aussi !!
+                for i in toVictory:
+                    if i == 'B':
+                        taquindejeu.haut()
+                    elif i == 'H':
+                        taquindejeu.bas()
+                    elif i == 'G':
+                        taquindejeu.droite()
+                    elif i == 'D':
+                        taquindejeu.gauche()
             #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
             argument2_tosend = toVictory #1G4H3D6H7G8G5B2B
         
