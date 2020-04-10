@@ -3,6 +3,9 @@ $(document).ready(function(){
     //Récupère la variable depart passée par python à l'initialisation de la page
     var state = $("#inittaquin").val()
     console.log("départ " + state);
+    
+    //un booléen pour savoir si une animation est en cours 
+    var lock = true;
     //Fonction qui met à jour l'état de la grille représentée par la chaîne des numéro
     function update(state, num){
         
@@ -69,15 +72,19 @@ $(document).ready(function(){
         //            }   
     };
     
+    
+    
+    var nbclick = 0;
+    
     //On écoute les click sur les tuiles (classe piece) et on détermine si l'élément est clickable
     $('div.piece').click(function(){
+        
         //Récupère l'id de la pièce sur laquelle on clique
         console.log("On vient de clicker sur "+ $(this).attr('id'))
+               
         //Récupération du numéro de la piece
         var numero = $(this).attr('id').charAt($(this).attr('id').length-1);
         
-        //logposition($(this));
-        //logposition($('#piece_0'));       
         //Récupère les coordonnées du coin haut gauche de la pièce
         var pos = $(this).position();
         
@@ -108,6 +115,11 @@ $(document).ready(function(){
         //Si l'élément est clickable, on l'échange avec la tuile vide
         if (clickable && dist!==0){
             console.log("mouvement autorisé");
+            
+            //Mise à jour du nombre de clicks
+            nbclick += 1;
+            //console.log("nb de clicks", nbclick)
+            $("#compteur").text("Déplacements effectués : " + nbclick);
             
             //On cherche dans quel sens bouger avant de faire l'échange
             if (pos_left == tuilevideleft && pos_top < tuilevidetop){
@@ -159,30 +171,41 @@ $(document).ready(function(){
                     var stringtoprocess = Object.values(returned)[1];
                     //Création d'une timeline pour l'animation
                     var solveTL = gsap.timeline();
-                    solveTL
+                    
                     for (i = 0; i < stringtoprocess.length/2; i++){
                         solveTL
                             .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
                             .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
                 
                     }
+                    state = '012345678';
+                    console.log("après animation DLS " + state)
                 }
                 
                 if (Object.values(returned)[0] == "giveup2"){
                     var stringtoprocess = Object.values(returned)[1];
                     //Création d'une timeline pour l'animation
                     var solveTL = gsap.timeline();
-                    solveTL
+                    
                     for (i = 0; i < stringtoprocess.length/2; i++){
                         solveTL
                             .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
                             .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
                 
                     }
+                    state = '012345678';
+                    console.log("after IDA*", state)
                 }
                 
                 if (Object.values(returned)[0] == "mymove"){
                     console.log("swap of pieces done")
+                    
+                    setTimeout(function () {
+                        if (state == '012345678') {
+                            alert('Congratulations on solving the puzzle !');
+                        }
+                    }, 1500);
+                    
                 }
             })
     }
@@ -203,7 +226,7 @@ $(document).ready(function(){
     $("#btn_giveup2").click(function(event){
         event.preventDefault();
         button_id = $(this).attr('id');
-        console.log("state", state);
+        console.log("state ", state);
         if (button_id == "btn_giveup2"){
                 request = {"action":"giveup2", "argument2":state};
                 send_info('/action', request);         
