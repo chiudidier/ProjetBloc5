@@ -21,7 +21,11 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours
-- Une fois le taquin résolu en utilisant l'un des boutons, un second appel à ces algorithmes fait n'importe quoi
+
+**09-04-2020** v0.5.2
+- Correction du bug lié aux boutons de résolution automatique (on peut clicker plusieurs fois désormais)
+- Ajout d'un compteur de déplacements
+- Ajout d'un message lorsqu'on a résolu (manuellement) le taquin
 
 **09-04-2020** v0.5.1
 - Mise à jour des fichiers taquin.py, link.py, play.html et process.js pour proposer différents boutons selon l'algorithme utilisé
