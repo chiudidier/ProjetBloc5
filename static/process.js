@@ -167,37 +167,33 @@ $(document).ready(function(){
                 console.log("return data => clefs " + Object.keys(returned)[0] + " " + Object.keys(returned)[1]);
                 console.log("return data => valeurs " + Object.values(returned)[0] + " " + Object.values(returned)[1]);
                 
-                if (Object.values(returned)[0] == "giveup1"){
-                    var stringtoprocess = Object.values(returned)[1];
-                    //Création d'une timeline pour l'animation
-                    var solveTL = gsap.timeline();
-                    
-                    for (i = 0; i < stringtoprocess.length/2; i++){
-                        solveTL
-                            .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
-                            .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
+                if (Object.values(returned)[0] == "help me Obi-wan Kenobi, you're my only hope"){
+                    var nextmove = ""
+                    for ( rang = 0; rang < 9; rang++){
+                        // Tous les 3 caractères on place un retour à la ligne
+                        if (rang % 3 == 0) {
+                        // Remplace le 0 par un espace vide
+                            if (Object.values(returned)[1][rang] == '0'){
+                                nextmove = nextmove + '\n' + '  ';
+                            }
+                            else {
+                                nextmove = nextmove + '\n' + Object.values(returned)[1][rang];
+                            }
+                        }
+                        else{
+                            if (Object.values(returned)[1][rang] == '0'){
+                                nextmove = nextmove + '  ';
+                            }
+                            else {
+                                nextmove = nextmove  + Object.values(returned)[1][rang];
+                            }
+                        }
+                    }
+                    alert("Un coup intéressant serait d'arriver à : "+ nextmove)
                 
                     }
-                    state = '012345678';
-                    console.log("après animation DLS " + state)
-                }
-                
-                if (Object.values(returned)[0] == "giveup2"){
-                    var stringtoprocess = Object.values(returned)[1];
-                    //Création d'une timeline pour l'animation
-                    var solveTL = gsap.timeline();
-                    
-                    for (i = 0; i < stringtoprocess.length/2; i++){
-                        solveTL
-                            .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
-                            .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
-                
-                    }
-                    state = '012345678';
-                    console.log("after IDA*", state)
-                }
-                
-                if (Object.values(returned)[0] == "mymove"){
+                // Sinon c'est qu'il faut faire l'animation d'un déplacement    
+                else if (Object.values(returned)[0] == "mymove"){
                     console.log("swap of pieces done")
                     
                     setTimeout(function () {
@@ -207,30 +203,51 @@ $(document).ready(function(){
                     }, 1500);
                     
                 }
+                // Sinon c'est qu'on a un algo de recherche qui a tourné et il faut animer la succession de déplacements vers l'état solution
+                else {
+                    var stringtoprocess = Object.values(returned)[1];
+                    //Création d'une timeline pour l'animation
+                    var solveTL = gsap.timeline();
+                    
+                    for (i = 0; i < stringtoprocess.length/2; i++){
+                        solveTL
+                            .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
+                            .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
+                    }
+                    state = '012345678';
+                    //console.log("after animation", state)
+                }
             })
     }
     
-    //On écoute le click sur le bouton qui actionne la solution via BFS+DFS
-    $("#btn_giveup1").click(function(event){
+    // On écoute les clicks sur l'un des boutons de résolution automatique
+    $(".btn").click(function(event){
         event.preventDefault();
         button_id = $(this).attr('id');
-        console.log("state", state);
-        if (button_id == "btn_giveup1"){
-                request = {"action":"giveup1", "argument2":state};
-                send_info('/action', request);         
+        
+        if (button_id == 'btn_helpme'){
+            request = {"action":"help me Obi-wan Kenobi, you're my only hope", "argument2":state}
+            console.log("infos", request);
+            send_info('/action', request);
         }
+        
+        else {
+            //console.log("id du bouton", button_id);
+            searchmethod = button_id.slice(button_id.length - 7);
+            request = {"action":searchmethod, "argument2":state};
+            console.log("infos", request);
+            send_info('/action', request);
+    
+        }
+        
     });
     
     
-    //On écoute le click sur le bouton qui actionne la solution via IDA*
-    $("#btn_giveup2").click(function(event){
-        event.preventDefault();
-        button_id = $(this).attr('id');
-        console.log("state ", state);
-        if (button_id == "btn_giveup2"){
-                request = {"action":"giveup2", "argument2":state};
-                send_info('/action', request);         
-        }
+    //Bouton pour remettre à 0 le compteur de déplacements
+    $("#reset").click(function(event) {
+            $("#compteur").text("Déplacements effectués : 0");
+            nbclick = 0;
+    
     });
 
 });
