@@ -20,14 +20,22 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 ## Change Log
 
 **Bugs connus**
-- Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours
+- Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
+
+
+**11-04-2020** v0.6.0
+- Adaptation du code avec uniquement la classe Taquin (plus de classe Etat)
+- Ajout d'un bouton pour lancer IDS
+- Ajout d'un bouton d'aide (le prochain coup "intéressant" est déterminé via IDA*)
+- Ajout d'un bouton pour remettre à zéro le compteur de déplacements
+- Modularisation du code python & JS (plus d'appel à des fonctions, moins de recopiage de morceaux de code)
 
 **09-04-2020** v0.5.3
-- mise à jour des fichiers Python :
+- Mise à jour des fichiers Python :
   - Classe Taquin uniquement (plus de classe Etat)
   - Bonne dénomination des fonctions
   - MAJ Commentaires
-- supression des version obsolètes
+- Supression des version obsolètes
 
 **09-04-2020** v0.5.2
 - Correction du bug lié aux boutons de résolution automatique (on peut clicker plusieurs fois désormais)
