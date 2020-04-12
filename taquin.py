@@ -211,9 +211,6 @@ def bfs(etatdepart):
     # état de départ pour lancer la recherche avec parcours en largeur
     A = [etatdepart]
     
-    # état gagnant
-    gagnant = '012345678'
-    
     # profondeur de départ
     p = 0
     while A != []:
@@ -221,7 +218,7 @@ def bfs(etatdepart):
         B = []
         # boucle qui teste un par un les états de profondeur p
         for i in range(0, len(A)):
-            # On vérifie si l'etat est gagnant
+            # On vérifie si l'état est gagnant
             taquindetravail = Taquin(A[i])
             if taquindetravail.estGagnant():
                 # renvoie la profondeur de la solution
@@ -236,29 +233,29 @@ def bfs(etatdepart):
         p = p + 1 
 
 # Recherche avec un parcours en profondeur limitée (DLS = Depth-Limited Search)
-def dls(profmax, etattest, proftest, path):
+def dls(profmax, etatdepart, profdepart, path):
     """
     Fonction qui teste les états suivants à partir d'un état en profondeur tout en se limitant à une profondeur max donnée
     Entrées :
         - profmax : profondeur maximale
-        - etattest : état de départ
-        - profest : profondeur initiale
-        - chemin : chemin (liste des états successifs) d'accès à l'état gagnant
+        - etatdepart : état de départ
+        - profdepart : profondeur initiale
+        - path : chemin (liste des états successifs) d'accès à l'état gagnant
     Sorties : 
     """
     
     # vérification si la profondeur maximum n'est pas atteinte
-    if proftest > profmax:
+    if profdepart > profmax:
         return(False)
     # vérification si l'etat testé est gagnant ou non
-    taquindetravail = Taquin(etattest)
+    taquindetravail = Taquin(etatdepart)
     if taquindetravail.estGagnant():
         return True
         
     # parcours récursif des états suivants
     # appel récursif de la fonction de test pour descendre en profondeurfor k in listeEtatsSuivants:
     for k in taquindetravail.suivants():
-        if dls(profmax, k, proftest + 1, path) == True:
+        if dls(profmax, k, profdepart + 1, path) == True:
             #stockage du chemin d'accès en mémoire et retour
             path.append(k)
             return True
@@ -266,10 +263,10 @@ def dls(profmax, etattest, proftest, path):
     return False
 	
 # Recherche avec un parcours en profondeur itérée (IDS = Iterative Deepening Search)
-def ids(etattest, path):
+def ids(etatdepart, path):
     profmax = 0
     profinit = 0
-    while not dls(profmax, etattest, profinit, path):
+    while not dls(profmax, etatdepart, profinit, path):
         profmax += 1
 	
 # Une fonction (heuristique pour IDA*) qui calcule un minorant du nombre de coups pour atteindre l'état solution à partir d'un état donné
@@ -294,18 +291,14 @@ def nbcoup(etat):
     
     return(total)
 
-
-############################################# AU DESSUS DE CA, TOUT VA BIEN ################################################
-
-	
-def dlsplus(profmax, etattest, proftest, path):
+# Adaptation de DLS pour tenir compte de l'heuristique	
+def dlsplus(profmax, etatdepart, profdepart, path):
 	#fonction qui test les suivants d'un etat en profondeur tout en se limitant a une profondeur donnée
     global min
-    taquindetravail = Taquin(etattest)
-    taquintest = taquindetravail.etat
+    taquindetravail = Taquin(etatdepart)
     
     #évalue le nombre de coup minimum pour atteindre la solution en ajoutant le minorant du nombre de coups à la profondeur actuellement testée
-    evalcoup = proftest + nbcoup(etattest)
+    evalcoup = profdepart + nbcoup(etatdepart)
     #print('nb coup a la solution (evalcoup)=',evalcoup)
         
     # vérification si la profondeur maximum n'est pas atteinte en tenant compte de la minoration du nombre de coup
@@ -322,7 +315,7 @@ def dlsplus(profmax, etattest, proftest, path):
     
     # Appel récursif de la fonction pour descendre en profondeur
     for k in taquindetravail.suivants():
-        if dlsplus(profmax, k, proftest + 1, path) == True:
+        if dlsplus(profmax, k, profdepart + 1, path) == True:
             #stockage du chemin d'accès en mémoire et retour
             path.append(k)
             return True
@@ -331,15 +324,14 @@ def dlsplus(profmax, etattest, proftest, path):
     
         
 # Recherche avec IDA * détermine les profondeur minimum des solutions accessibles en réduisant au maximum les plages de recherche
-def ida(taquin0, path):
+def ida(etatdepart, path):
     global min
     
-    etat0 = taquin0.etat
-    m = nbcoup(etat0)
-    print('The Force is this strong with this one', m)
+    m = nbcoup(etatdepart)
+    #print('The Force is this strong with this one', m)
     while m != 1000:
         min = 1000
-        if dlsplus(m, etat0, 0, path):
+        if dlsplus(m, etatdepart, 0, path):
             #print('m=',m,' min=',min)
             return(True)
         #print('maj de m')
