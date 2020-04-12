@@ -3,7 +3,7 @@ Jeu du Taquin 3x3
 
 ## Structure 
 Le projet est constitué de 2 principaux modules relativement indépendants :
-- Un module Python pour faire de la recherche de solution via un parcours en largeur dans un premier temps dans un arbre d'états. Ensuite remplacé par une fonction. Recherche de la solution par un parcours en profondeur limité par la fonction précédente.
+- Un module Python pour faire de la recherche de solution et du chemin pour y accéder
 - Un module Web (notamment JS) qui va permettre d'afficher l'état du jeu et de représenter les mouvements des tuiles
 
 ## Module Python
