@@ -68,6 +68,7 @@ def ReturnOfTheJedi():
     # Préparation de la réponse à envoyer à JS    
     if (actionaskedbyJS != "None"):
         
+        chemin = []
         # Si on a clické sur une tuile dans la page web
         if (actionaskedbyJS == "mymove"):
             if argument2fromJS == 'H': 
@@ -93,7 +94,6 @@ def ReturnOfTheJedi():
                 print("solution à la profondeur", profsol)
                 
                 #print("début DLS")
-                chemin = []
                 dls(profsol, taquindejeu.etat, 0, chemin)
                 
                 # création des déplacements à faire pour atteindre l'état solution
@@ -105,7 +105,6 @@ def ReturnOfTheJedi():
             # On lance IDS
             if taquindejeu.estGagnant() == False:
                 #print("Début IDS")
-                chemin = []
                 ids(taquindejeu.etat, chemin)
                 
                 # création des déplacements à faire pour atteindre l'état solution
@@ -117,8 +116,9 @@ def ReturnOfTheJedi():
             # On lance IDA*
             if taquindejeu.estGagnant() == False:
                 #print("Début IDA*")
-                chemin = []
-                ida(taquindejeu, chemin)
+                m = nbcoup(taquindejeu.etat)
+                print('The Force is this strong with this one', m)
+                ida(taquindejeu.etat, chemin)
                 
                 # création des déplacements à faire pour atteindre l'état solution
                 arg2retour = pathfinder(taquindejeu, chemin) 
@@ -129,8 +129,7 @@ def ReturnOfTheJedi():
             # On lance IDA*
             if taquindejeu.estGagnant() == False:
                 #print("Début IDA*")
-                chemin = []
-                ida(taquindejeu, chemin)
+                ida(taquindejeu.etat, chemin)
                 
                 # création des déplacements à faire pour atteindre l'état solution
                 arg2retour = chemin.pop()
