@@ -253,11 +253,11 @@ def dls(profmax, etatdepart, profdepart, path):
         return True
         
     # parcours récursif des états suivants
-    # appel récursif de la fonction de test pour descendre en profondeurfor k in listeEtatsSuivants:
-    for k in taquindetravail.suivants():
-        if dls(profmax, k, profdepart + 1, path) == True:
+    # appel récursif de la fonction de test pour descendre en profondeur
+    for etatsuivant in taquindetravail.suivants():
+        if dls(profmax, etatsuivant, profdepart + 1, path) == True:
             #stockage du chemin d'accès en mémoire et retour
-            path.append(k)
+            path.append(etatsuivant)
             return True
         
     return False
@@ -314,10 +314,10 @@ def dlsplus(profmax, etatdepart, profdepart, path):
         return True
     
     # Appel récursif de la fonction pour descendre en profondeur
-    for k in taquindetravail.suivants():
-        if dlsplus(profmax, k, profdepart + 1, path) == True:
+    for etatsuivant in taquindetravail.suivants():
+        if dlsplus(profmax, etatsuivant, profdepart + 1, path) == True:
             #stockage du chemin d'accès en mémoire et retour
-            path.append(k)
+            path.append(etatsuivant)
             return True
     
     return(False)
