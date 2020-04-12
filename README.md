@@ -22,9 +22,13 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
+**12-04-2020** v0.6.2
+- Mofications mineures sur des noms de variables, commentaires et messages affichés
+
+
 **11-04-2020** v0.6.1
 - Ajout d'un fichier IDA* intégrant le mélange aléatoire avec vérification de la soluvabilité par parité du chaos engendré.
-- Obligation de vérification de la profondeur de la solution pour ne pas engendré un calcul trop long (max 20)
+- Obligation de vérification de la profondeur de la solution pour ne pas engendrer un calcul trop long (max 20)
 
 **11-04-2020** v0.6.0
 - Adaptation du code avec uniquement la classe Taquin (plus de classe Etat)
