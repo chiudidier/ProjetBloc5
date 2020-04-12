@@ -24,7 +24,7 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 
 **12-04-2020** v0.6.2
 - Mofications mineures sur des noms de variables, commentaires et messages affichés
-
+- Nettoyage de la page d'accueil du Git : les fichiers ont été déplacés dans Dossier de Travail
 
 **11-04-2020** v0.6.1
 - Ajout d'un fichier IDA* intégrant le mélange aléatoire avec vérification de la soluvabilité par parité du chaos engendré.
