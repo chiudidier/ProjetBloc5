@@ -22,6 +22,10 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
+**13-04-2020** v0.6.3
+- Correction de bug à la fin du jeu (on pouvait continuer à jouer)
+- Essai intégration du jeu en python autonome dans le main.py
+
 **12-04-2020** v0.6.2
 - Mofications mineures sur des noms de variables, commentaires et messages affichés
 - Nettoyage de la page d'accueil du Git : les fichiers ont été déplacés dans Dossier de Travail
