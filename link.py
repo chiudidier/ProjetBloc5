@@ -48,14 +48,12 @@ def MayTheForceBeWithYou():
 @app.route('/next')
 def ANewHope():    
     #mélange du taquin
-    taquindejeu.melanger(95)
+    taquindejeu.melanger(50)
     print("Le taquin au départ", taquindejeu.etat) #contient par exemple "312645780"
     #chaîne à envoyer pour transmettre l'état 
     machaine = taquindejeu.etat
     
-    # Pour faire planter : '172356840'
-    # En 15 coups : '301756482'
-    return render_template('play.html', depart=machaine) 
+    return render_template('play.html', depart=machaine)
     
 @app.route('/action')
 def ReturnOfTheJedi():
@@ -63,14 +61,20 @@ def ReturnOfTheJedi():
     # Récupération de l'action demandée par JS (ici une chaine de caractères)
     actionaskedbyJS = request.args.get("action", type = str)
     argument2fromJS = request.args.get("argument2", type = str) #argument2fromJS contient l'état (chaîne) du taquin avant le click
-    print("\nCe que j'ai reçu de JS début", actionaskedbyJS, argument2fromJS)
-              
+    print("\nC3P0 just sent", actionaskedbyJS, argument2fromJS)
+    #print("taquin de jeu coté python", taquindejeu.etat)          
     # Préparation de la réponse à envoyer à JS    
-    if (actionaskedbyJS != "None"):
-        
+    if (actionaskedbyJS == "None"):
+        arg2retour = "None bizarre reçu"
+    
+    else:
         chemin = []
+        if taquindejeu.estGagnant() == True:
+            # talk astromech https://pypi.org/project/ttastromech/
+            arg2retour = "beep-end"
+        
         # Si on a clické sur une tuile dans la page web
-        if (actionaskedbyJS == "mymove"):
+        elif (actionaskedbyJS == "mymove"):
             if argument2fromJS == 'H': 
                 taquindejeu.haut()
             elif argument2fromJS == 'B':
@@ -81,67 +85,53 @@ def ReturnOfTheJedi():
                 taquindejeu.gauche()
             
             print("état du jeu après click", taquindejeu.etat)
-            argument2_tosend = "done"
+            # sound like an astromech https://www.r2d2translator.com/
+            arg2retour = "beep-done"
         
-        # On lance DLS 
+        # On lance DLS
         elif (actionaskedbyJS == "giveup1"):
-            #On lance DLS
-            if taquindejeu.estGagnant() == False:
+            #print("début BFS")
+            # calcul la profondeur minimum de la solution via BFS
+            profsol = bfs(taquindejeu.etat)
+            print("Midichlorian level is", profsol)
                 
-                # calcul la profondeur minimum de la solution via BFS
-                #print("début BFS")
-                profsol = bfs(taquindejeu.etat)
-                print("solution à la profondeur", profsol)
+            #print("début DLS")
+            dls(profsol, taquindejeu.etat, 0, chemin)
                 
-                #print("début DLS")
-                dls(profsol, taquindejeu.etat, 0, chemin)
-                
-                # création des déplacements à faire pour atteindre l'état solution
-                arg2retour = pathfinder(taquindejeu, chemin) 
-            #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            argument2_tosend = arg2retour
-        
+            # création des déplacements à faire pour atteindre l'état solution
+            arg2retour = pathfinder(taquindejeu, chemin) 
+            
+        # On lance IDS
         elif (actionaskedbyJS == "giveup2"):
-            # On lance IDS
-            if taquindejeu.estGagnant() == False:
-                #print("Début IDS")
-                ids(taquindejeu.etat, chemin)
+            #print("Début IDS")
+            ids(taquindejeu.etat, chemin)
                 
-                # création des déplacements à faire pour atteindre l'état solution
-                arg2retour = pathfinder(taquindejeu, chemin)             
-            #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            argument2_tosend = arg2retour
-        
+            # création des déplacements à faire pour atteindre l'état solution
+            arg2retour = pathfinder(taquindejeu, chemin)             
+            
+        # On lance IDA*
         elif (actionaskedbyJS == "giveup3"):
-            # On lance IDA*
-            if taquindejeu.estGagnant() == False:
-                #print("Début IDA*")
-                m = nbcoup(taquindejeu.etat)
-                print('The Force is this strong with this one', m)
-                ida(taquindejeu.etat, chemin)
+            #print("Début IDA*")
+            m = nbcoup(taquindejeu.etat)
+            print('The Force is this strong with this one', m)
+            ida(taquindejeu.etat, chemin)
                 
-                # création des déplacements à faire pour atteindre l'état solution
-                arg2retour = pathfinder(taquindejeu, chemin) 
-            #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            argument2_tosend = arg2retour
-        
+            # création des déplacements à faire pour atteindre l'état solution
+            arg2retour = pathfinder(taquindejeu, chemin)
+            
+        # On lance aussi IDA* pour l'aide
         elif (actionaskedbyJS == "help me Obi-wan Kenobi, you're my only hope"):
-            # On lance IDA*
-            if taquindejeu.estGagnant() == False:
-                #print("Début IDA*")
-                ida(taquindejeu.etat, chemin)
-                
-                # création des déplacements à faire pour atteindre l'état solution
-                arg2retour = chemin.pop()
-            #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable
-            argument2_tosend = arg2retour
+            #print("Début IDA*")
+            ida(taquindejeu.etat, chemin)
+            
+            # création des déplacements à faire pour atteindre l'état solution
+            arg2retour = chemin.pop()
         
         else:
-            argument2_tosend="NULL"
-    else:
-        argument2_tosend = "None bizarre"
-    
-    answerdict = {"action": actionaskedbyJS, "argument2": argument2_tosend}
+            arg2retour="NULL"
+        
+    #la variable renvoyée à JS doit être un string, tuple, response instance ou WSGI callable    
+    answerdict = {"action": actionaskedbyJS, "argument2": arg2retour}
     #print("Je vais renvoyer à JS en JSON ", jsonify(answerdict)) <= renvoie un dictionnaire avec les keys entourées de simple quote
     #print("Je vais renvoyer à JS en JSON ", json.dumps(answerdict))
     # envoi le dictionnaire en JSON à JS
