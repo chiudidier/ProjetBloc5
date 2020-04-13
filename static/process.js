@@ -102,8 +102,13 @@ $(document).ready(function(){
             var clickable = true;
         }
         
+        //Si le taquin est déjà résolu
+        if(state == '012345678'){
+            alert("I have already brought peace, freedom, justice, and security to my new empire");
+        }
+        
         // Si l'élément est clickable, on l'échange avec la tuile vide
-        if (clickable && dist!==0){
+        else if (clickable && dist!==0){
             console.log("This is a legal move");
             
             // Mise à jour du nombre de déplacements
@@ -135,6 +140,7 @@ $(document).ready(function(){
             request = {"action": "mymove", "argument2": tuilevidedir};
             send_info('/action', request);
         }
+        
         else {
             alert("This is not the tile you're looking for");
         }
@@ -146,7 +152,7 @@ $(document).ready(function(){
             type : 'GET',
             url : receiver,
             data : to_send,
-            success : function(){console.log("Retour python effectué");},
+            success : function(){console.log("Transmitting...");},
             error : function(){console.log("BSoD : Erreur fatale pendant la demande d'action " + Object.values(to_send)[0]);}
             })
             // On exécute cette fonction au retour
@@ -157,11 +163,16 @@ $(document).ready(function(){
             .done(function(data){               
                 // Produit un dictionnaire à partir des données envoyées par python
                 var returned = JSON.parse(data); 
-                console.log("Data received", Object(returned));
+                console.log("R2D2 sent back", Object(returned));
                 //console.log("return data => clefs " + Object.keys(returned)[0] + " " + Object.keys(returned)[1]);
                 //console.log("return data => valeurs " + Object.values(returned)[0] + " " + Object.values(returned)[1]);
                 
-                if (Object.values(returned)[0] == "help me Obi-wan Kenobi, you're my only hope"){
+                if (Object.values(returned)[1] == "beep-end"){
+                    alert("I find your lack of faith disturbing");
+                    
+                }
+                
+                else if (Object.values(returned)[0] == "help me Obi-wan Kenobi, you're my only hope" & state !='012345678'){
                     var nextmove = ""
                     for ( rang = 0; rang < 9; rang++){
                         // Tous les 3 caractères on place un retour à la ligne
@@ -197,12 +208,13 @@ $(document).ready(function(){
                     }, 1500);
                     
                 }
-                // Sinon c'est qu'on a un algo de recherche qui a tourné et il faut animer la succession de déplacements vers l'état solution
-                else {
+                
+                // Sinon c'est qu'on a un algo de recherche qui a tourné et il faut animer la succession de déplacements vers l'état solution                   
+                else if (Object.values(returned)[1] != "already done"){
                     var stringtoprocess = Object.values(returned)[1];
                     //Création d'une timeline pour l'animation
                     var solveTL = gsap.timeline();
-                    
+                
                     for (i = 0; i < stringtoprocess.length/2; i++){
                         solveTL
                             .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
@@ -211,6 +223,8 @@ $(document).ready(function(){
                     state = '012345678';
                     //console.log("after animation", state)
                 }
+                
+                
             })
     }
     
@@ -218,7 +232,7 @@ $(document).ready(function(){
     $(".btn").click(function(event){
         event.preventDefault();
         button_id = $(this).attr('id');
-        
+        console.log("state au click", state)
         if (button_id == 'btn_helpme'){
             request = {"action":"help me Obi-wan Kenobi, you're my only hope", "argument2":state}
         }
@@ -228,7 +242,7 @@ $(document).ready(function(){
             searchmethod = button_id.slice(button_id.length - 7);
             request = {"action":searchmethod, "argument2":state};   
         }
-        console.log("Data sent", request);
+        console.log("C3P0 sends", request);
         send_info('/action', request);
         
     });
