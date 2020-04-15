@@ -1,0 +1,13 @@
+21 coups : 475832106
+22 coups : 834615720
+23 coups : 852310647
+24 coups : 561432870
+25 coups : 641027583
+26 coups : 278614350
+27 coups : 176438205
+
+Rappel : 
+Le taquin 176438205 correspond à la configuration suivante :
+1 7 6
+4 3 8
+2 0 5 
