@@ -22,14 +22,20 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
-** 14-04-2020**v0.7
-- MAJ des codes taquin.py et main.py en intégrant toutes les versions
-- explication de l'utilisation de l'heuristique dans le dossier Jupyter Algo
-- poursuite du déroulement du projet dans le Jupyter projet
 
-** 13-04-2020**v0.6.3
-- maj de la partie heuristique du dossiers Jupyter Algo
-- maj du déroulement du projet dans le Jupyter Projet
+**14-04-2020** v0.7.1
+- MAJ du dossier Vidéos
+- MAJ du document annexe sur les algo (v0.9)
+- MAJ du déroulement du projet (v0.4)
+
+**14-04-2020** v0.7
+- MAJ des codes taquin.py et main.py en intégrant toutes les versions
+- Explication de l'utilisation de l'heuristique dans le dossier Jupyter Algo
+- Poursuite du déroulement du projet dans le Jupyter projet
+
+**13-04-2020** v0.6.3
+- MAJ de la partie heuristique du dossiers Jupyter Algo
+- MAJ du déroulement du projet dans le Jupyter Projet
 
 **13-04-2020** v0.6.3
 - Correction de bug à la fin du jeu (on pouvait continuer à jouer)
