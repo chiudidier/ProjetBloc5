@@ -22,6 +22,8 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
+**15-04-2020** v0.7.2
+- MAJ des fichiers Jupyters
 
 **14-04-2020** v0.7.1
 - MAJ du dossier Vidéos
