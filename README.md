@@ -22,6 +22,11 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
+**16-04-2020** v0.7.3
+- Ajustement divers dans le texte des pages index.html et play.html
+- Ajustement du compteur de déplacement pendant la résolution automatique
+- Reupload des vidéos avec animation du compteur de déplacements
+
 **15-04-2020** v0.7.2
 - MAJ des fichiers Jupyters (v06 et v 0.9.3)
 - Création et intégration du schéma qui montre les interactions entre le module python et le module web (dans le dossier image pour ma partie algo)
