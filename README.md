@@ -23,7 +23,8 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
 **15-04-2020** v0.7.2
-- MAJ des fichiers Jupyters
+- MAJ des fichiers Jupyters (v06 et v 0.9.3)
+- Création et intégration du schéma qui montre les interactions entre le module python et le module web (dans le dossier image pour ma partie algo)
 
 **14-04-2020** v0.7.1
 - MAJ du dossier Vidéos
