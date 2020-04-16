@@ -144,7 +144,15 @@ $(document).ready(function(){
         else {
             alert("This is not the tile you're looking for");
         }
-        });
+    });
+    
+    function updateclickcount(loop) { 
+        setTimeout(function() {
+            nbclick += 1;
+            $("#compteur").text("Déplacements effectués : " + nbclick);
+        }, 1000 * loop); 
+    } 
+
     
     // Fonction d'envoi de données au module python
     function send_info(receiver, to_send){
@@ -169,7 +177,6 @@ $(document).ready(function(){
                 
                 if (Object.values(returned)[1] == "beep-end"){
                     alert("I find your lack of faith disturbing");
-                    
                 }
                 
                 else if (Object.values(returned)[0] == "help me Obi-wan Kenobi, you're my only hope" & state !='012345678'){
@@ -196,7 +203,7 @@ $(document).ready(function(){
                     }
                     alert("I have a good (not a bad one) feeling about this : "+ nextmove)
                 
-                    }
+                }
                 // Sinon c'est qu'il faut faire l'animation d'un déplacement    
                 else if (Object.values(returned)[0] == "mymove"){
                     //console.log("swap of pieces done")
@@ -206,7 +213,6 @@ $(document).ready(function(){
                             alert("You've just restored balance to the Force and brought peace to the Galaxy");
                         }
                     }, 1500);
-                    
                 }
                 
                 // Sinon c'est qu'on a un algo de recherche qui a tourné et il faut animer la succession de déplacements vers l'état solution                   
@@ -214,17 +220,18 @@ $(document).ready(function(){
                     var stringtoprocess = Object.values(returned)[1];
                     //Création d'une timeline pour l'animation
                     var solveTL = gsap.timeline();
-                
-                    for (i = 0; i < stringtoprocess.length/2; i++){
+                  
+                    for (i = 0; i < stringtoprocess.length/2; i++){       
                         solveTL
                             .to($("#piece_" + stringtoprocess[2*i]), 0.5, getdir(stringtoprocess[2*i+1]), "+=0.5")
                             .to($("#piece_0"), 0.5, oppositedir(stringtoprocess[2*i+1]), "-=0.5")
+                        
+                        // Mise à jour du nombre de déplacements
+                        updateclickcount(i);
                     }
                     state = '012345678';
                     //console.log("after animation", state)
                 }
-                
-                
             })
     }
     
@@ -232,7 +239,7 @@ $(document).ready(function(){
     $(".btn").click(function(event){
         event.preventDefault();
         button_id = $(this).attr('id');
-        console.log("state au click", state)
+        //console.log("state au click", state)
         if (button_id == 'btn_helpme'){
             request = {"action":"help me Obi-wan Kenobi, you're my only hope", "argument2":state}
         }
@@ -244,15 +251,12 @@ $(document).ready(function(){
         }
         console.log("C3P0 sends", request);
         send_info('/action', request);
-        
     });
-    
     
     // Bouton pour remettre à 0 le compteur de déplacements
     $("#reset").click(function(event) {
             $("#compteur").text("Déplacements effectués : 0");
             nbclick = 0;
-    
     });
 
 });
