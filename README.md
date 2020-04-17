@@ -22,6 +22,9 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 **Bugs connus**
 - Déplacement buggué si on click trop vite sur une tuile alors qu'un mouvement est en cours (double click par exemple)
 
+**17-04-2020** v0.7.4
+- Modifications mineures suite à la relecture
+
 **16-04-2020** v0.7.3
 - Ajustement divers dans le texte des pages index.html et play.html
 - Ajustement du compteur de déplacement pendant la résolution automatique
