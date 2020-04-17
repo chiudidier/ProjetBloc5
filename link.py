@@ -12,18 +12,16 @@ Created on Sat Mar 21 12:37:34 2020
 
 # Flask
 from flask import Flask, render_template, request, jsonify, json
+app = Flask(__name__)
 
 # Utilisation de la libraire random
 from random import *
-#Flask
-app = Flask(__name__)
 
 # le fichier taquin.py contient :
 # - la classe Taquin définie pour le jeu
 # - les fonctions bfs (parcours en largeur), dls (parcours en profondeur avec limite), ids (parcours en profondeur itérée) et ida* (ids avec heuristique)
-# - les fonctions de création de succession d'action pour animer le chemin vers la solution
+# - les fonctions de création de succession d'actions pour animer le chemin vers la solution
 from taquin import *
-
     
 #==============
 # Phase de jeu
@@ -84,7 +82,7 @@ def ReturnOfTheJedi():
             elif argument2fromJS == 'G':
                 taquindejeu.gauche()
             
-            print("état du jeu après click", taquindejeu.etat)
+            print("état du jeu après clicks", taquindejeu.etat)
             # sound like an astromech https://www.r2d2translator.com/
             arg2retour = "beep-done"
         
@@ -115,7 +113,7 @@ def ReturnOfTheJedi():
             m = nbcoup(taquindejeu.etat)
             print('The Force is this strong with this one', m)
             ida(taquindejeu.etat, chemin)
-                
+            print("nb de coups", len(chemin))    
             # création des déplacements à faire pour atteindre l'état solution
             arg2retour = pathfinder(taquindejeu, chemin)
             
