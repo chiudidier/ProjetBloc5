@@ -26,6 +26,8 @@ Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de D
 - Ajustement divers dans le texte des pages index.html et play.html
 - Ajustement du compteur de déplacement pendant la résolution automatique
 - Reupload des vidéos avec animation du compteur de déplacements
+- Corrections diverses dans le Jupyter
+- Ajustement de l'image architecture.png
 
 **15-04-2020** v0.7.2
 - MAJ des fichiers Jupyters (v06 et v 0.9.3)
