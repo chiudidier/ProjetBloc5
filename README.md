@@ -3,11 +3,12 @@ Jeu du Taquin 3x3
 
 ## Structure 
 Le projet est constitué de 2 principaux modules relativement indépendants :
-- Un module Python pour faire de la recherche de solution et du chemin pour y accéder
-- Un module Web (notamment JS) qui va permettre d'afficher l'état du jeu et de représenter les mouvements des tuiles
+- Un module Python dédié à la recherche de l'état solution et du chemin pour y accéder
+- Un module Web qui va permettre d'afficher l'état du jeu et de représenter les mouvements des tuiles
 
 ## Module Python
-Le module python permetra de récupérer les données et de calculer la meilleur solution pour ensuite donner la tuile à jouer pour arriver au plus vite à la solution.
+- Le module python permetra de récupérer les données et de déterminer le chemin menant à l'état solution
+- Il pourra renvoyer une indication de coup suivant à jouer
 
 ## Module Web
 Le module web utilise les librairies :
@@ -15,7 +16,7 @@ Le module web utilise les librairies :
 - GSAP pour la partie d'animation des objets
 
 ## Travail Collaboratif
-Travail lancé par Didier CHIU et Nicolas VAZ-PINTO, avec l'aide précieuse de David CAISSON et Teddy CHENE
+Travail réalisé par Didier CHIU et Nicolas VAZ-PINTO
 
 ## Change Log
 
